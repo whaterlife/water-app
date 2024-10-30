@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import RootLayout from '../layouts/RootLayout';
+import RootLayout from '../../layouts/Rootlayout';
 
 const UserOther = () => {
   const [email, setEmail] = useState('');

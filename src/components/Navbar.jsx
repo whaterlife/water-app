@@ -7,10 +7,10 @@ const Navbar = () => {
   const [isEducationOpen, setEducationOpen] = useState(false);
 
   return (
-    <nav className=" text-orange-800 px-8 py-12 relative z-10">
+    <nav className=" text-orange-800 px-8 relative z-10">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <div className="text-2xl font-bold text-orange-500">MyLogo</div>
+          <img src="src/assets/images/life.jpg" alt="image" />
 
         {/* Links with Icons */}
         <ul className="hidden md:flex space-x-8">

@@ -3,7 +3,9 @@ import RootLayout from '../../layouts/Rootlayout';
 const About = () => {
   return (
     <RootLayout>
-      <div>About</div>
+      <div>
+        <h2></h2>
+      </div>
     </RootLayout>
   )
 }

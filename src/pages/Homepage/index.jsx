@@ -86,7 +86,9 @@ const Hero = () => {
                         </button>
                     </form>
                 </div>
+
             </section>
+            <img src="src/assets/images/took.png" alt="image" />
         </RootLayout>
     );
 };

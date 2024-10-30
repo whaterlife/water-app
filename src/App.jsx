@@ -8,6 +8,8 @@ import PlumbersChecklist from "./pages/Plumberlist/PlumbersCheckList";
 import Dashboard from "./pages/plumber dashboard";
 import Usersignup from "./pages/User/usersignup";
 import LogIn from "./pages/User/userlogin";
+import UserOther from "./pages/User/UserOther";
+
 
 function App() {
   const router = createBrowserRouter([
