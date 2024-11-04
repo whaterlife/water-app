@@ -1,6 +1,6 @@
 import React from "react";
 import { Droplets } from "lucide-react";
-import RootLayout from "../../layouts/Rootlayout";
+import RootLayout from "../../layouts/RootLayout";
 
 const Hero = () => {
     return (
