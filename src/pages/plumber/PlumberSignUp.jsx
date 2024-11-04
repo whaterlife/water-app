@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Eye,EyeOff } from "lucide-react"
 import { Link } from "react-router-dom"
 import { useNavigate} from "react-router-dom"
-import RootLayout from "../../layouts/Rootlayout"
+import RootLayout from "../../layouts/RootLayout"
 import Swal from "sweetalert2"
 
 

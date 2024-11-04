@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import RootLayout from '../../layouts/Rootlayout';
+import RootLayout from '../../layouts/RootLayout';
 import { Link } from 'react-router-dom';
 
 const UserOther = () => {

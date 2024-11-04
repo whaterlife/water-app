@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import SignatureCanvas from "react-signature-canvas";
-import RootLayout from "../../layouts/Rootlayout";
+import RootLayout from "../../layouts/RootLayout";
 
 const LeakReportForm = () => {
     const sigCanvas = useRef(null);
