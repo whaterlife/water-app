@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Hero from "./pages/home";
+import LeakReportForm from "./pages/home/LeakReportForm";
+import PlumbersChecklist from "./pages/plist/PlumbersCheckList";
+import Dashboard from "./pages/plumber-dashboard/index";
+import UserSignup from "./pages/User/UserSignUp";
+import LogIn from "./pages/User/UserLogin";
+import UserOther from "./pages/User/UserOther";
+import Sidebar from "./pages/plumber-dashboard/Sidebar";
+import Plumbersignup from "./pages/plumber/PlumberSignUp";
+import PlumberLogin from "./pages/plumber/PlumberLogin";
+import PlumberList from "./pages/plist/PlumberList";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const router = createBrowserRouter([
+    {
+      path: '/log',
+      element: <LogIn />,
+    },
+    {
+      path: '/',
+      element: <Hero />,
+    },
+    {
+      path: '/sign',
+      element: <UserSignup/>,
+    },
+     
+    {
+      path: '/list',
+      element: <PlumberList/>
+    },
+    {
+      path: '/side',
+      element: <Sidebar />,
+    },
+    {
+      path: '/checklist',
+      element: <PlumbersChecklist />,
+    },
+    {
+      path: '/dash',
+      element: <Dashboard />,
+    },
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    {
+      path: '/useother',
+      element: <UserOther />,
+    },
+    {
+      path: '/plumber',
+      element: <Plumbersignup />,
+    },
+    {
+      path: '/plogin',
+      element: <PlumberLogin />,
+    },
+    {
+      path: '/leak',
+      element: <LeakReportForm />,
+    },
+    
+
+
+
+
+
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
