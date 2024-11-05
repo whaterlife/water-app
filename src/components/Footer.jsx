@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-      <footer className="  text-red-800 font-sans mt-7 w-full p-8">
+      <footer className="  bg-cyan-500 text-white font-sans mt-7 w-full p-8">
         <div className="flex flex-wrap justify-between">
           <div className="flex-1 min-w-[300px] mb-8 pr-4">
             <h3 className="mb-4">choose 4life for a seamless and convenient  experience</h3>
@@ -26,18 +26,18 @@ const Footer = () => {
           <div className="flex-1 min-w-[200px] mb-8 px-4">
             <h2 className="text-xl font-bold mb-6">Information</h2>
             <ul className="space-y-2">
-              <li className="hover:text-orange-500 hover:-translate-x-4 transition-all duration-200 ease-in-out">Privacy Policy</li>
-              <li className="hover:text-orange-500 hover:-translate-x-4 transition-all duration-200 ease-in-out">Return & Warranty Policy</li>
-              <li className="hover:text-orange-500 hover:-translate-x-4 transition-all duration-200 ease-in-out">Terms and Conditions</li>
+              <li className="hover:text-blue-800 hover:-translate-x-4 transition-all duration-200 ease-in-out">Privacy Policy</li>
+              <li className="hover:text-blue-800 hover:-translate-x-4 transition-all duration-200 ease-in-out">Return & Warranty Policy</li>
+              <li className="hover:text-blue-800 hover:-translate-x-4 transition-all duration-200 ease-in-out">Terms and Conditions</li>
             </ul>
           </div>
   
           <div className="flex-1 min-w-[200px] mb-8 pl-4">
             <h2 className="text-xl font-bold mb-6">Company</h2>
             <ul className="space-y-2 mb-8">
-              <Link to="/About" className="hover:text-orange-500 hover:-translate-x-4 transition-all duration-200 ease-in-out"> About us</Link >
-                <li className="hover:text-orange-500 hover:-translate-x-4 transition-all duration-200 ease-in-out">Corporate Website</li>
-                <li className="hover:text-orange-500 hover:-translate-x-4 transition-all duration-200 ease-in-out">Store Finder</li>
+              <Link to="/About" className="hover:text-blue-800 hover:-translate-x-4 transition-all duration-200 ease-in-out"> About us</Link >
+                <li className="hover:text-blue-800 hover:-translate-x-4 transition-all duration-200 ease-in-out">Corporate Website</li>
+                <li className="hover:text-blue-800 hover:-translate-x-4 transition-all duration-200 ease-in-out">Store Finder</li>
             </ul>
             
           </div>
