@@ -2,6 +2,7 @@ import React from "react";
 import { Droplets } from "lucide-react";
 import RootLayout from "../../layouts/RootLayout";
 import About from "../about";
+import Statistics from "../statistics";
 
 const Hero = () => {
     return (
@@ -85,9 +86,10 @@ const Hero = () => {
                         </button>
                     </form>
                 </div>
-            </section>
-            <About/>
+            </section> 
             <img src="./src/assets/images/pick.png" alt="image" />
+            <Statistics/>
+            <About/>
         </RootLayout>
     );
 };

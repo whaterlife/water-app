@@ -22,7 +22,7 @@ const About = () => {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold text-blue-600 mb-10">Overview</h2>
+        <h2 className="text-3xl font-bold text-blue-600 mb-10">Education</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {educationTopics.map((topic, index) => (
             <div

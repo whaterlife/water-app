@@ -10,6 +10,7 @@ import Sidebar from "./pages/plumber-dashboard/Sidebar";
 import Plumbersignup from "./pages/plumber/PlumberSignUp";
 import PlumberLogin from "./pages/plumber/PlumberLogin";
 import PlumberList from "./pages/plist/PlumberList";
+import Statistics from "./pages/statistics";
 
 
 function App() {
@@ -59,6 +60,10 @@ function App() {
     {
       path: '/leak',
       element: <LeakReportForm />,
+    },
+    {
+      path: '/stat',
+      element: <Statistics/>,
     },
     
 
