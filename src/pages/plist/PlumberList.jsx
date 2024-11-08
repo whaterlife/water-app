@@ -32,10 +32,10 @@ const PlumberList = () => {
         <section className="p-6 bg-gray-100 min-h-screen">
             
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold text-orange-500">Our Plumbers</h1>
+                <h1 className="text-2xl font-bold text-blue-500">Our Plumbers</h1>
                 <button
                     onClick={() => setIsGridView(!isGridView)}
-                    className="p-2 bg-orange-500 text-white rounded-lg hover:bg-yellow-600 transition"
+                    className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
                 >
                     {isGridView ? <List size={20} /> : <Grid size={20} />}
                 </button>
@@ -67,7 +67,7 @@ const PlumberList = () => {
                                 <h2 className="text-lg font-bold text-gray-800">{plumber.name}</h2>
                                 <p className="text-gray-600">{plumber.location}</p>
                             </div>
-                            <p className="text-orange-500 font-semibold">{plumber.contact}</p>
+                            <p className="text-blue-500 font-semibold">{plumber.contact}</p>
                         </div>
                     </div>
                 ))}
@@ -81,9 +81,9 @@ const PlumberList = () => {
                         onClick={() => handlePageChange(index + 1)}
                         className={`px-3 py-1 rounded-lg ${
                             currentPage === index + 1
-                                ? "bg-orange-500 text-white"
+                                ? "bg-blue-500 text-white"
                                 : "bg-gray-200 text-gray-700"
-                        } hover:bg-orange-400 transition`}
+                        } hover:bg-blue-400 transition`}
                     >
                         {index + 1}
                     </button>

@@ -1,81 +1,114 @@
 import React, { useState } from 'react';
 import { Home, FileText, CheckCircle, LogOut, Star } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import PlumberChecklistForm from '../plist/PlumbersCheckList';
+import LeakageReportList from '../home/ReportleakageList';
 
 const Dashboard = () => {
-  const [activeCategory, setActiveCategory] = useState('Home');
-  const [rating, setRating] = useState(3); // Default rating can be any number within 5
-  
+  const [activeCategory, setActiveCategory] = useState('My Dashboard');
+  const [rating, setRating] = useState(3);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const navigate = useNavigate();
+
   const handleCategoryClick = (category) => {
-    setActiveCategory(category);
+    if (category === 'Logout') {
+      navigate('/log'); // Redirect to login when "Logout" is clicked
+    } else if (category === 'reportlist') {
+      setActiveCategory(category);
+    } else {
+      setActiveCategory(category);
+    }
   };
 
-  // Increase rating when a task is completed
   const handleTaskCompletion = () => {
-    setRating(prev => (prev < 5 ? prev + 1 : prev)); // Limit to a max of 5 stars
+    setRating(prev => (prev < 5 ? prev + 1 : prev));
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarExpanded(prev => !prev);
+  };
+
+  const handleMouseLeave = () => {
+    setIsSidebarExpanded(false);
   };
 
   return (
     <div className="flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white text-orange-800 h-screen p-4">
+      <aside
+        onMouseEnter={toggleSidebar}
+        onMouseLeave={handleMouseLeave}
+        className={`bg-white text-blue-800 h-screen p-4 transition-width duration-300 ${isSidebarExpanded ? 'w-64' : 'w-20'}`}
+      >
         <div className="flex items-center mb-6">
           <img
-            src="https://via.placeholder.com/100" // Replace with actual image URL
+            src="https://via.placeholder.com/100"
             alt="Profile"
-            className="w-20 h-20 rounded-full"
+            className="w-12 h-12 rounded-full"
           />
-          <div className="ml-4">
-            <h2 className="text-lg font-semibold">Jacob Delanyo Dotsey</h2>
-            <div className="flex items-center">
-              {[...Array(rating)].map((_, index) => (
-                <Star key={index} className="text-yellow-400" />
-              ))}
+          {isSidebarExpanded && (
+            <div className="ml-4">
+              <h2 className="text-lg font-semibold">Jacob Delanyo Dotsey</h2>
+              <div className="text-blue-700 flex items-center">
+                {[...Array(rating)].map((_, index) => (
+                  <Star key={index} className="text-cyan-400" />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <nav>
           <ul>
-            <li className="flex items-center p-2 cursor-pointer hover:bg-blue-200" onClick={() => handleCategoryClick('Home')}> 
-              <Link to="/" className="mr-2"><Home /> Home</Link> 
+            <li
+              className="flex text-blue-900 items-center p-2 cursor-pointer hover:bg-blue-400"
+              onClick={() => handleCategoryClick('ReportList')}
+            >
+              <Home className="mr-2" />
+              {isSidebarExpanded && <span>ReportList</span>}
             </li>
-            <li className="flex items-center p-2 cursor-pointer hover:bg-blue-200" onClick={() => handleCategoryClick('Leakage Form')}>
-              <Link to="/checklist" className="mr-2"><FileText /> Leakage Form</Link>
+            <li
+              className="flex items-center p-2 cursor-pointer hover:bg-blue-400"
+              onClick={() => handleCategoryClick('PlumberChecklist Form')}
+            >
+              <FileText className="mr-2 text-blue-800" />
+              {isSidebarExpanded && <span className="text-blue-900">Plumber Checklist Form</span>}
             </li>
-            <li className="flex items-center p-2 cursor-pointer hover:bg-blue-200" onClick={() => handleCategoryClick('Completed Task')}>
+            <li
+              className="flex items-center p-2 cursor-pointer hover:bg-blue-400"
+              onClick={() => handleCategoryClick('Completed Task')}
+            >
               <CheckCircle className="mr-2" />
-              Completed Task
+              {isSidebarExpanded && <span>Completed Task</span>}
             </li>
-            <li className="flex items-center p-2 cursor-pointer hover:bg-blue-200" onClick={() => handleCategoryClick('Logout')}>
+            <li
+              className="flex items-center p-2 cursor-pointer hover:bg-blue-400"
+              onClick={() => handleCategoryClick('Logout')}
+            >
               <LogOut className="mr-2" />
-              Logout
+              {isSidebarExpanded && <span>Logout</span>}
             </li>
           </ul>
         </nav>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 bg-gray-100 p-6">
-        <h1 className="text-2xl font-semibold mb-4">{activeCategory}</h1>
-        {activeCategory === 'Home' && <div>Your home content goes here.</div>}
-        {activeCategory === 'Leakage Form' && <div>Your leakage form content goes here.</div>}
+      <main className="flex-1 bg-white p-6">
+        <h1 className="text-2xl text-blue-800 font-semibold mb-4">{activeCategory}</h1>
+        {activeCategory === 'ReportList' && <LeakageReportList />}
+        {activeCategory === 'PlumberChecklist Form' && <PlumberChecklistForm />}
         {activeCategory === 'Completed Task' && (
           <div>
             <p>Your completed tasks will appear here.</p>
-            <button 
+            <button
               onClick={handleTaskCompletion}
-              className="mt-4 bg-orange-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg"
+              className="mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
             >
               Mark Task as Completed
             </button>
           </div>
         )}
-        {activeCategory === 'Logout' && <div>You have logged out.</div>}
       </main>
     </div>
   );
 };
 
 export default Dashboard;
-

@@ -47,12 +47,9 @@ const PlumberLogin = () => {
             </div>
 
             <div className="flex items-center justify-between">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-              >
+                  <Link to="/dash"  type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
                 Log In
-              </button>
+              </Link>
             </div>
           </form>
           <div>

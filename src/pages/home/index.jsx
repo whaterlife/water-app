@@ -8,7 +8,7 @@ const Hero = () => {
     return (
         <RootLayout>
             <section className="relative bg-cover bg-center h-screen bg-[url('src/assets/images/more.jpg')] flex items-center">
-                <div className="absolute inset-0 bg-black opacity-50"></div>
+                <div className="absolute inset-0"></div>
                 <div className="absolute top-35 left-20 z-10 max-w-md">
                     <h5 className="text-2xl font-bold text-white flex items-center pb-10">WELCOME TO</h5>
                     <h1 className="text-4xl font-bold text-white flex items-center">
@@ -22,12 +22,12 @@ const Hero = () => {
 
                 {/* Form Container */}
                 <div className="relative z-10 w-full md:w-1/3 bg-white bg-opacity-10 p-8 rounded-lg shadow-lg ml-auto mr-12">
-                    <h2 className="text-2xl font-bold mb-4 text-white">Report a Leakage</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-blue-700">Report a Leakage</h2>
                     <form className="space-y-4">
                         <div>
                             <label
                                 htmlFor="name"
-                                className="text-md font-medium text-white"
+                                className="text-md font-medium  text-blue-700"
                             >
                                 Name
                             </label>
@@ -39,7 +39,7 @@ const Hero = () => {
                             <div>
                                 <label
                                     htmlFor="email"
-                                    className="text-md font-medium text-white"
+                                    className="text-md font-medium text-blue-700"
                                 >
                                     Email
                                 </label>
@@ -54,7 +54,7 @@ const Hero = () => {
                         <div>
                             <label
                                 htmlFor="subject"
-                                className="text-md font-medium text-white"
+                                className="text-md font-medium text-blue-700"
                             >
                                 Subject
                             </label>
@@ -67,7 +67,7 @@ const Hero = () => {
                         <div>
                             <label
                                 htmlFor="message"
-                                className="text-md font-medium text-white"
+                                className="text-md font-medium text-blue-700"
                             >
                                 Message
                             </label>

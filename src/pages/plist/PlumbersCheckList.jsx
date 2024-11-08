@@ -57,10 +57,10 @@ const PlumberChecklistForm = () => {
         <section className="p-6 min-h-screen flex flex-col lg:flex-row items-start ">
             {/* Form Container */}
             <div className="w-full lg:w-1/2 p-6 shadow-md space-y-4 h-[977px]">
-                <h1 className="text-2xl font-bold text-orange-500 mb-4">Plumber Checklist</h1>
+                <h1 className="text-2xl font-bold text-blue-500 mb-4">Plumber Checklist</h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1" htmlFor="plumberName">
+                        <label className="block text-blue-700 font-semibold mb-1" htmlFor="plumberName">
                             Plumber Name
                         </label>
                         <input
@@ -69,11 +69,11 @@ const PlumberChecklistForm = () => {
                             value={formData.plumberName}
                             onChange={handleChange}
                             placeholder="Enter plumber's name"
-                            className="w-full p-2 border border-yellow-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            className="w-full p-2 border border-cyan-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1" htmlFor="location">
+                        <label className="block text-blue-700 font-semibold mb-1" htmlFor="location">
                             Location
                         </label>
                         <input
@@ -82,11 +82,11 @@ const PlumberChecklistForm = () => {
                             value={formData.location}
                             onChange={handleChange}
                             placeholder="Enter location"
-                            className="w-full p-2 border border-yellow-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            className="w-full p-2 border border-cyan-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1" htmlFor="descriptionOfWork">
+                        <label className="block text-blue-700 font-semibold mb-1" htmlFor="descriptionOfWork">
                             Description of Work
                         </label>
                         <textarea
@@ -94,11 +94,11 @@ const PlumberChecklistForm = () => {
                             value={formData.descriptionOfWork}
                             onChange={handleChange}
                             placeholder="Describe the work performed"
-                            className="w-full p-2 border border-yellow-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 h-24 resize-none"
+                            className="w-full p-2 border border-cyan-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-24 resize-none"
                         ></textarea>
                     </div>
                      <div>
-                        <h2 className="text-lg font-semibold mb-2">Property Assessment</h2>
+                        <h2 className="text-lg  text-blue-700 font-semibold mb-2">Property Assessment</h2>
                         {[
                             { key: "noStagnantWater", label: "No indication of stagnant water present" },
                             { key: "noInvisibleLeakage", label: "No invisible signs of leakage around septic tanks" },
@@ -106,20 +106,20 @@ const PlumberChecklistForm = () => {
                         ].map(({ key, label }) => (
                             <div key={key} className="mb-4">
                                 <div className="flex items-center justify-between">
-                                    <label className="text-gray-700 font-semibold">{label}</label>
+                                    <label className="text-blue-700 font-semibold">{label}</label>
                                     <div className="flex items-center space-x-4">
-                                        <label className="flex items-center">
+                                        <label className="flex items-center text-blue-700">
                                             <input
                                                 type="radio"
                                                 name={key}
                                                 value="Yes"
                                                 checked={formData.assessment[key] === "Yes"}
                                                 onChange={(e) => handleRadioChange(e, key)}
-                                                className="mr-1"
+                                                className="mr-1 text-blue-800"
                                             />
                                             Yes
                                         </label>
-                                        <label className="flex items-center">
+                                        <label className=" text-blue-700 flex items-center">
                                             <input
                                                 type="radio"
                                                 name={key}
@@ -130,7 +130,7 @@ const PlumberChecklistForm = () => {
                                             />
                                             No
                                         </label>
-                                        <label className="flex items-center">
+                                        <label className=" text-blue-700 flex items-center">
                                             <input
                                                 type="radio"
                                                 name={key}
@@ -150,25 +150,25 @@ const PlumberChecklistForm = () => {
                                         value={formData.notes[key]}
                                         onChange={(e) => handleNotesChange(e, key)}
                                         placeholder="Enter additional notes"
-                                        className="w-full p-2 border border-yellow-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 mt-2"
+                                        className="w-full p-2 border text-blue-700 border-cyan-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2"
                                     />
                                 )}
                             </div>
                         ))}
                     </div>
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1" htmlFor="photo">
+                        <label className="block text-blue-700 font-semibold mb-1" htmlFor="photo">
                             Upload Photo
                         </label>
                         <input
                             type="file"
                             name="photo"
                             onChange={handleChange}
-                            className="w-full p-2 border border-yellow-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            className="w-full p-2 border text-blue-700 border-cyan-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1" htmlFor="recommendations">
+                        <label className="block text-blue-700 font-semibold mb-1" htmlFor="recommendations">
                             Recommendations
                         </label>
                         <textarea
@@ -176,11 +176,11 @@ const PlumberChecklistForm = () => {
                             value={formData.recommendations}
                             onChange={handleChange}
                             placeholder="Enter recommendations"
-                            className="w-full p-2 border border-yellow-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 h-24 resize-none"
+                            className="w-full p-2 border border-cyan-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-24 resize-none"
                         ></textarea>
                     </div>
                     <div>
-                        <label className="block text-gray-700 font-semibold mb-1" htmlFor="date">
+                        <label className="block text-blue-700 font-semibold mb-1" htmlFor="date">
                             Date
                         </label>
                         <input
@@ -188,14 +188,14 @@ const PlumberChecklistForm = () => {
                             name="date"
                             value={formData.date}
                             onChange={handleChange}
-                            className="w-full p-2 border border-yellow-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            className="w-full p-2 border border-cyan-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
 
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="mt-4 w-full bg-orange-500 hover:bg-yellow-600 text-white font-bold py-2 rounded-lg transition"
+                        className="mt-4 w-full bg-blue-700 hover:bg-cyan-600 text-white font-bold py-2 rounded-lg transition"
                     >
                         Submit
                     </button>
@@ -203,7 +203,7 @@ const PlumberChecklistForm = () => {
             </div>
             <div className="hidden lg:block lg:w-1/2">
                 <img
-                    src="../src/assets/images/like.jpg"
+                    src="../src/assets/images/pipess.jpg"
                     alt="image"
                     className="shadow-lg object-cover h-full w-full"
                 />

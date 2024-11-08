@@ -6,11 +6,11 @@ import Dashboard from "./pages/plumber-dashboard/index";
 import UserSignup from "./pages/user/UserSignUp";
 import LogIn from "./pages/user/UserLogin";
 import UserOther from "./pages/user/UserOther";
-import Sidebar from "./pages/plumber-dashboard/Sidebar";
 import Plumbersignup from "./pages/plumber/PlumberSignUp";
 import PlumberLogin from "./pages/plumber/PlumberLogin";
 import PlumberList from "./pages/plist/PlumberList";
 import Statistics from "./pages/statistics";
+import LeakageReportList from "./pages/home/ReportleakageList";
 
 
 function App() {
@@ -31,10 +31,6 @@ function App() {
     {
       path: '/list',
       element: <PlumberList/>
-    },
-    {
-      path: '/side',
-      element: <Sidebar />,
     },
     {
       path: '/checklist',
@@ -65,7 +61,10 @@ function App() {
       path: '/stat',
       element: <Statistics/>,
     },
-    
+    {
+      path: 'reportlist',
+      element: <LeakageReportList />,
+    },
 
 
 
