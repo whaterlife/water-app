@@ -11,6 +11,10 @@ import PlumberLogin from "./pages/plumber/PlumberLogin";
 import PlumberList from "./pages/plist/PlumberList";
 import Statistics from "./pages/statistics";
 import LeakageReportList from "./pages/home/ReportleakageList";
+import AdminDashboard from "./pages/admin-dashboard";
+import AdminLogin from "./pages/admin-dashboard/login";
+import Resources from "./pages/resources";
+import ResourcesAd from "./pages/admin-dashboard/resourcesad";
 
 
 function App() {
@@ -66,7 +70,23 @@ function App() {
       element: <LeakageReportList />,
     },
 
-
+    {
+      path: 'admin',
+      element: <AdminDashboard />,
+    },
+    {
+      path: '/adlog',
+      element: <AdminLogin/>,
+    },
+    {
+      path: '/adres',
+      element: <ResourcesAd/>,
+    },
+    {
+      path: '/res',
+      element: <Resources/>,
+    },
+     
 
 
 

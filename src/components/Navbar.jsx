@@ -44,13 +44,14 @@ const Navbar = () => {
             </a>
             {isEducationOpen && (
               <div className="absolute top-full left-0 mt-2 w-40 bg-white text-cyan-600 shadow-lg rounded-md z-20">
-                <a href="#resources" className="block px-4 py-2 hover:bg-blue-100">
-                  Resources
+                <a href="res" >
+                <Link to="/res" className="block px-4 py-2 hover:bg-blue-100">Resources
+                </Link>
                 </a>
-                <a href="#events" className="block px-4 py-2 hover:bg-blue-700">
-                  Events
+                <a href="#events" className="block px-4 py-2 hover:bg-blue-100">
+                  Tips
                 </a>
-                <a href="#campaign" className="block px-4 py-2 hover:bg-blue-700">
+                <a href="#campaign" className="block px-4 py-2 hover:bg-blue-100">
                   Campaign
                 </a>
               </div>

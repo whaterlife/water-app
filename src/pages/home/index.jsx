@@ -1,10 +1,18 @@
 import React from "react";
 import { Droplets } from "lucide-react";
+import { FiUser } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import RootLayout from "../../layouts/RootLayout";
 import About from "../about";
 import Statistics from "../statistics";
 
 const Hero = () => {
+    const navigate = useNavigate();
+
+    const handleAdminClick = () => {
+        navigate('/adlog'); 
+    };
+
     return (
         <RootLayout>
             <section className="relative bg-cover bg-center h-screen bg-[url('src/assets/images/more.jpg')] flex items-center">
@@ -27,7 +35,7 @@ const Hero = () => {
                         <div>
                             <label
                                 htmlFor="name"
-                                className="text-md font-medium  text-blue-700"
+                                className="text-md font-medium text-blue-700"
                             >
                                 Name
                             </label>
@@ -36,20 +44,19 @@ const Hero = () => {
                                 placeholder="Full Name"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                            <div>
-                                <label
-                                    htmlFor="email"
-                                    className="text-md font-medium text-blue-700"
-                                >
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    placeholder="Email"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                            </div>
-
+                        </div>
+                        <div>
+                            <label
+                                htmlFor="email"
+                                className="text-md font-medium text-blue-700"
+                            >
+                                Email
+                            </label>
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
                         </div>
                         <div>
                             <label
@@ -76,8 +83,6 @@ const Hero = () => {
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-24 resize-none"
                             ></textarea>
                         </div>
-
-
                         <button
                             type="submit"
                             className="w-full bg-blue-400 hover:bg-cyan-600 text-white font-bold py-2 rounded-lg transition-colors"
@@ -86,10 +91,16 @@ const Hero = () => {
                         </button>
                     </form>
                 </div>
+                <button
+                    onClick={handleAdminClick}
+                    className="absolute bottom-4 left-4 p-3 rounded-full bg-blue-700 text-white hover:bg-blue-600 transition"
+                    title="Admin Login"
+                >
+                    <FiUser size={20} />
+                </button>
             </section> 
-            <img src="./src/assets/images/pick.png" alt="image" />
-            <Statistics/>
-            <About/>
+            <Statistics />
+            <About />
         </RootLayout>
     );
 };
