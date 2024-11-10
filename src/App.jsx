@@ -10,7 +10,7 @@ import Plumbersignup from "./pages/plumber/PlumberSignUp";
 import PlumberLogin from "./pages/plumber/PlumberLogin";
 import PlumberList from "./pages/plist/PlumberList";
 import Statistics from "./pages/statistics";
-import LeakageReportList from "./pages/home/ReportleakageList";
+import LeakageReportList from "./pages/home/LeakageReportList";
 import AdminDashboard from "./pages/admin-dashboard";
 import AdminLogin from "./pages/admin-dashboard/login";
 import Resources from "./pages/resources";
@@ -70,7 +70,7 @@ function App() {
     },
     {
       path: 'reportlist',
-      element: <LeakageReportList />,
+      element: <LeakageReportList/>,
     },
 
     {

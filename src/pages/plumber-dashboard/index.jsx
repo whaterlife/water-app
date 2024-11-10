@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Home, FileText, CheckCircle, LogOut, Star } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import PlumberChecklistForm from '../plist/PlumbersCheckList';
-import LeakageReportList from '../home/ReportleakageList';
+import LeakageReportList from '../home/LeakageReportList';
 
 const Dashboard = () => {
   const [activeCategory, setActiveCategory] = useState('My Dashboard');

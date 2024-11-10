@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Home, FileText, CheckCircle, LogOut, Users, BookPlus, PenSquare } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import PlumberList from '../plist/PlumberList';
-import LeakageReportList from '../home/ReportleakageList';
+import LeakageReportList from '../home/LeakageReportList';
 import ResourcesAd from './resourcesad';
 
 const AdminDashboard = () => {
