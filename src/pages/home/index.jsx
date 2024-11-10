@@ -10,12 +10,12 @@ const Hero = () => {
     const navigate = useNavigate();
 
     const handleAdminClick = () => {
-        navigate('/adlog'); 
+        navigate('/adlog');
     };
 
     return (
         <RootLayout>
-            <section className="relative bg-cover bg-center h-screen bg-[url('src/assets/images/more.jpg')] flex items-center">
+            <section className="relative bg-cover bg-center h-screen bg-[url('src/assets/images/pipes.jpg')] flex items-center">
                 <div className="absolute inset-0"></div>
                 <div className="absolute top-35 left-20 z-10 max-w-md">
                     <h5 className="text-2xl font-bold text-white flex items-center pb-10">WELCOME TO</h5>
@@ -30,12 +30,12 @@ const Hero = () => {
 
                 {/* Form Container */}
                 <div className="relative z-10 w-full md:w-1/3 bg-white bg-opacity-10 p-8 rounded-lg shadow-lg ml-auto mr-12">
-                    <h2 className="text-2xl font-bold mb-4 text-blue-700">Report a Leakage</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-white">Report a Leakage</h2>
                     <form className="space-y-4">
                         <div>
                             <label
                                 htmlFor="name"
-                                className="text-md font-medium text-blue-700"
+                                className="text-md font-medium text-white"
                             >
                                 Name
                             </label>
@@ -48,7 +48,7 @@ const Hero = () => {
                         <div>
                             <label
                                 htmlFor="email"
-                                className="text-md font-medium text-blue-700"
+                                className="text-md font-medium text-white"
                             >
                                 Email
                             </label>
@@ -60,21 +60,23 @@ const Hero = () => {
                         </div>
                         <div>
                             <label
-                                htmlFor="subject"
-                                className="text-md font-medium text-blue-700"
+                                htmlFor="photo"
+                                className="text-md font-medium text-white"
                             >
-                                Subject
+                                Photo
                             </label>
                             <input
-                                type="text"
-                                placeholder="Subject"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                type="file"
+                                id="photo"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                                accept="image/*"
                             />
                         </div>
+
                         <div>
                             <label
                                 htmlFor="message"
-                                className="text-md font-medium text-blue-700"
+                                className="text-md font-medium text-white"
                             >
                                 Message
                             </label>
@@ -98,7 +100,7 @@ const Hero = () => {
                 >
                     <FiUser size={20} />
                 </button>
-            </section> 
+            </section>
             <Statistics />
             <About />
         </RootLayout>
