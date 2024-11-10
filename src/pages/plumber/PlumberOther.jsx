@@ -8,7 +8,7 @@ const UserOther = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic to handle login goes here (e.g., send credentials to server)
+    // Logic to handle login goes here 
     console.log('Email:', email, 'Password:', password);
   };
 

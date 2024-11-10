@@ -13,11 +13,11 @@ const Plumbersignup = () => {
   const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
-    event.preventDefault();// prevent the page from reloading
+    event.preventDefault();
     try {
       // Prepare a data to be sent to the backend
       setLoading(true)
-      const formData = new FormData(event.target); // takes data from the form
+      const formData = new FormData(event.target); 
       const buisnessname = formData.get("buisnessname");
       const firstname = formData.get("firstname");
       const lastname = formData.get("lastname");
@@ -71,10 +71,7 @@ const Plumbersignup = () => {
         <div className="min-h-screen py-12">
           <div className="bg-white-300 flex items-center justify-center">
             <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-2xl shadow-blue-600">
-              {/* Form Title */}
               <h2 className="text-4xl font-extrabold text-center text-blue-800 mb-6">Plumber Signup</h2>
-
-              {/* SignUP Form */}
               <form className="space-y-4"
                 onSubmit={handleSubmit}>
                <div>
@@ -149,8 +146,6 @@ const Plumbersignup = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* Remember Me Checkbox */}
                 <div className="flex items-center justify-between">
                   <label className="flex items-center">
                     <input type="checkbox" className="mr-2" />
@@ -160,8 +155,6 @@ const Plumbersignup = () => {
                 </div>
 
                 <button type="submit" className="w-full bg-blue-600 text-white text-lg font-bold py-2 px-4 rounded hover:bg-cyan-700 focus:outline-none focus:ring-4 focus:ring-blue-300"> {loading ? "Loading... " : "Register"}
-
-
                 </button>
               </form>
               <div className="my-5 flex items-center">
@@ -169,13 +162,9 @@ const Plumbersignup = () => {
                 <span className="mx-4 text-blue-700 text-xl font-bold">OR</span>
                 <div className="flex-grow border-t border-gray-300"></div>
               </div>
-
-              {/* Social Login Buttons */}
               <button type="button" className="w-full bg-white text-blue-700 text-sm font-bold py-2 px-4 border border-cyan-700 rounded hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300">
                 Sign up with Google
               </button>
-
-              {/* SIGN-UP link */}
               <p >
                 Already have an account?{" "}<Link to="/plogin"className="text-center mt-4 text-blue-700 text-sm" >Login</Link>
               </p>

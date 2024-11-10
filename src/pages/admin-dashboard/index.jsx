@@ -3,7 +3,6 @@ import { Home, FileText, CheckCircle, LogOut, Users, BookPlus, PenSquare } from 
 import { Link, useNavigate } from 'react-router-dom';
 import PlumberList from '../plist/PlumberList';
 import LeakageReportList from '../home/ReportleakageList';
-import Resources from '../resources';
 import ResourcesAd from './resourcesad';
 
 const AdminDashboard = () => {
@@ -13,7 +12,7 @@ const AdminDashboard = () => {
 
   const handleCategoryClick = (category) => {
     if (category === 'Logout') {
-      navigate('/'); // Redirect to login when "Logout" is clicked
+      navigate('/'); 
     } else {
       setActiveCategory(category);
     }
@@ -33,11 +32,10 @@ const AdminDashboard = () => {
         onMouseEnter={toggleSidebar}
         onMouseLeave={handleMouseLeave}
         className={`bg-cyan-300 text-blue-900 font-bold h-screen p-4 transition-width duration-300 ${isSidebarExpanded ? 'w-64' : 'w-20'}`}
-      >
-        {/* Logo and Name Section */}
+      >      
         <div className="flex items-center mb-8">
           <img
-            src="https://via.placeholder.com/100" // Replace with actual Water4Life logo URL
+            src="./src/assets/images/hat.jpg" 
             alt="Water4Life Logo"
             className="w-10 h-10 rounded-full"
           />
@@ -45,7 +43,6 @@ const AdminDashboard = () => {
             <span className="ml-3 text-lg font-bold text-blue-900">Water4Life</span>
           )}
         </div>
-
         <nav>
           <ul>
             <li
@@ -100,7 +97,6 @@ const AdminDashboard = () => {
           </ul>
         </nav>
       </aside>
-
       <main className="flex-1 bg-white p-6">
         <h1 className="text-2xl text-blue-800 font-semibold mb-4">{activeCategory}</h1>
         {activeCategory === 'List of Plumbers' && <PlumberList/>}

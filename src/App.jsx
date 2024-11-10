@@ -15,6 +15,9 @@ import AdminDashboard from "./pages/admin-dashboard";
 import AdminLogin from "./pages/admin-dashboard/login";
 import Resources from "./pages/resources";
 import ResourcesAd from "./pages/admin-dashboard/resourcesad";
+import Pipes from "./pages/education/pipes-fittings";
+import WaterConservationTips from "./pages/education/water-conservation-tips";
+import CampaignsEvents from "./pages/eventsandcampaigns";
 
 
 function App() {
@@ -86,7 +89,18 @@ function App() {
       path: '/res',
       element: <Resources/>,
     },
-     
+    {
+      path: '/pipe',
+      element: <Pipes/>,
+    },
+    {
+      path: '/water',
+      element: <WaterConservationTips/>,
+    },
+    {
+      path: '/camp',
+      element: <CampaignsEvents/>,
+    },
 
 
 

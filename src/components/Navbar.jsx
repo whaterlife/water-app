@@ -48,11 +48,17 @@ const Navbar = () => {
                 <Link to="/res" className="block px-4 py-2 hover:bg-blue-100">Resources
                 </Link>
                 </a>
-                <a href="#events" className="block px-4 py-2 hover:bg-blue-100">
-                  Tips
+                <a href="pipe" >
+                <Link to="/pipe" className="block px-4 py-2 hover:bg-blue-100">Pipes & Fittings
+                </Link>
                 </a>
-                <a href="#campaign" className="block px-4 py-2 hover:bg-blue-100">
-                  Campaign
+                <a href="water" >
+                <Link to="/water" className="block px-4 py-2 hover:bg-blue-100">Water Conservation Tips
+                </Link>
+                </a>
+                <a href="camp" >
+                <Link to="/camp" className="block px-4 py-2 hover:bg-blue-100">Events &Campaign
+                </Link>
                 </a>
               </div>
             )}

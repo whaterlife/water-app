@@ -13,7 +13,7 @@ const UserSignUp = () => {
   const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
-    event.preventDefault();// prevent the page from reloading
+    event.preventDefault();
     try {
       // Prepare a data to be sent to the backend
       setLoading(true)

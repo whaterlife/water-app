@@ -46,7 +46,6 @@ const Resources = () => {
           <p className="text-gray-600">Secure storage (e.g., AWS, Firebase) is essential to store report data, images, and historical records for future reference and analysis.</p>
         </div>
       </div>
-      {/* Back to Home Page Button */}
       <Link 
         to="/" 
         className="absolute bottom--1 right-0 bg-blue-500 text-white py-2 px-4 rounded hover:bg-cyan-600 transition duration-300"

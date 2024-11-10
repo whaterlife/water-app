@@ -12,7 +12,7 @@ const Dashboard = () => {
 
   const handleCategoryClick = (category) => {
     if (category === 'Logout') {
-      navigate('/log'); // Redirect to login when "Logout" is clicked
+      navigate('/log'); 
     } else if (category === 'reportlist') {
       setActiveCategory(category);
     } else {

@@ -55,7 +55,6 @@ const PlumberChecklistForm = () => {
 
     return (
         <section className="p-6 min-h-screen flex flex-col lg:flex-row items-start ">
-            {/* Form Container */}
             <div className="w-full lg:w-1/2 p-6 shadow-md space-y-4 h-[977px]">
                 <h1 className="text-2xl font-bold text-blue-500 mb-4">Plumber Checklist</h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -191,8 +190,6 @@ const PlumberChecklistForm = () => {
                             className="w-full p-2 border border-cyan-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
-
-                    {/* Submit Button */}
                     <button
                         type="submit"
                         className="mt-4 w-full bg-blue-700 hover:bg-cyan-600 text-white font-bold py-2 rounded-lg transition"

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import RootLayout from '../../layouts/RootLayout';
 import { Link } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 
@@ -9,7 +8,7 @@ const AdminLogin = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Logic to handle login goes here (e.g., send credentials to server)
+        // Logic to handle login goes here
         console.log('Email:', email, 'Password:', password);
     };
 
@@ -28,13 +27,10 @@ const AdminLogin = () => {
               <input
                 type="email"
                 id="email"
-                // value={email}
-                // onChange={(e) => setEmail(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 required
               />
             </div>
-
             <div className="mb-6">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                 Password
@@ -42,20 +38,16 @@ const AdminLogin = () => {
               <input
                 type="password"
                 id="password"
-                // value={password}
-                // onChange={(e) => setPassword(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 required
               />
             </div>
-
             <div className="flex items-center justify-between">
                   <Link to="/admin"  type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
                 Log In
               </Link>
             </div>
-          </form>
-         
+          </form>         
         </div>
       </div>
       </section>

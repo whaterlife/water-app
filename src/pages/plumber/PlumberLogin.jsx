@@ -8,7 +8,7 @@ const PlumberLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic to handle login goes here (e.g., send credentials to server)
+    // Logic to handle login goes here 
     console.log('Email:', email, 'Password:', password);
   };
 
@@ -25,8 +25,6 @@ const PlumberLogin = () => {
               <input
                 type="email"
                 id="email"
-                // value={email}
-                // onChange={(e) => setEmail(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 required
               />
@@ -39,8 +37,6 @@ const PlumberLogin = () => {
               <input
                 type="password"
                 id="password"
-                // value={password}
-                // onChange={(e) => setPassword(e.target.value)}
                 className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 required
               />
