@@ -18,6 +18,7 @@ import ResourcesAd from "./pages/admin-dashboard/resourcesad";
 import Pipes from "./pages/education/pipes-fittings";
 import WaterConservationTips from "./pages/education/water-conservation-tips";
 import CampaignsEvents from "./pages/eventsandcampaigns";
+import WelcomeSection from "./pages/welcome";
 
 
 function App() {
@@ -28,6 +29,10 @@ function App() {
     },
     {
       path: '/',
+      element: <WelcomeSection />,
+    },
+    {
+      path: '/home',
       element: <Hero />,
     },
     {

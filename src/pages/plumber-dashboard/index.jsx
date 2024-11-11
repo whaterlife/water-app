@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Home, FileText, CheckCircle, LogOut, Star } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Home, FileText, CheckCircle, LogOut, Star, Bell, Settings, Sun, Moon, HelpCircle, Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import PlumberChecklistForm from '../plist/PlumbersCheckList';
 import LeakageReportList from '../home/LeakageReportList';
 
@@ -8,13 +8,13 @@ const Dashboard = () => {
   const [activeCategory, setActiveCategory] = useState('My Dashboard');
   const [rating, setRating] = useState(3);
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   const handleCategoryClick = (category) => {
     if (category === 'Logout') {
       navigate('/log'); 
-    } else if (category === 'reportlist') {
-      setActiveCategory(category);
     } else {
       setActiveCategory(category);
     }
@@ -32,23 +32,40 @@ const Dashboard = () => {
     setIsSidebarExpanded(false);
   };
 
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle('dark');
+  };
+
   return (
-    <div className="flex">
+    <div className={`flex ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-blue-800'}`}>
       <aside
         onMouseEnter={toggleSidebar}
         onMouseLeave={handleMouseLeave}
-        className={`bg-white text-blue-800 h-screen p-4 transition-width duration-300 ${isSidebarExpanded ? 'w-64' : 'w-20'}`}
-      >
+        className={`h-screen p-4 transition-width duration-300 flex flex-col ${isSidebarExpanded ? 'w-64' : 'w-20'} ${darkMode ? 'bg-gray-800' : 'bg-white'}`}
+      >   
+        {isSidebarExpanded && (
+          <div className="mb-4 flex items-center">
+            <Search className="mr-2 text-gray-500" />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full p-2 rounded bg-gray-200 text-blue-900"
+            />
+          </div>
+        )}
         <div className="flex items-center mb-6">
           <img
-            src="https://via.placeholder.com/100"
+            src="https://savefiles.org/secure/uploads/21338?shareable_link=491"
             alt="Profile"
             className="w-12 h-12 rounded-full"
           />
           {isSidebarExpanded && (
             <div className="ml-4">
               <h2 className="text-lg font-semibold">Jacob Delanyo Dotsey</h2>
-              <div className="text-blue-700 flex items-center">
+              <div className="flex items-center">
                 {[...Array(rating)].map((_, index) => (
                   <Star key={index} className="text-cyan-400" />
                 ))}
@@ -56,29 +73,29 @@ const Dashboard = () => {
             </div>
           )}
         </div>
-
-        <nav>
+        <nav className="flex-grow">
+          <ul>
+            {['Report List', 'Plumber Checklist Form', 'Completed Task'].map((item, index) => (
+              <li
+                key={index}
+                className="flex items-center p-2 cursor-pointer hover:bg-blue-400"
+                onClick={() => handleCategoryClick(item)}
+                style={{ display: item.toLowerCase().includes(searchQuery.toLowerCase()) ? 'flex' : 'none' }}
+              >
+                {index === 0 ? <Home className="mr-2" /> : index === 1 ? <FileText className="mr-2 text-blue-800" /> : <CheckCircle className="mr-2" />}
+                {isSidebarExpanded && <span>{item}</span>}
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className="mt-auto">
           <ul>
             <li
-              className="flex text-blue-900 items-center p-2 cursor-pointer hover:bg-blue-400"
-              onClick={() => handleCategoryClick('ReportList')}
-            >
-              <Home className="mr-2" />
-              {isSidebarExpanded && <span>ReportList</span>}
-            </li>
-            <li
               className="flex items-center p-2 cursor-pointer hover:bg-blue-400"
-              onClick={() => handleCategoryClick('PlumberChecklist Form')}
+              onClick={() => handleCategoryClick('Help & Support')}
             >
-              <FileText className="mr-2 text-blue-800" />
-              {isSidebarExpanded && <span className="text-blue-900">Plumber Checklist Form</span>}
-            </li>
-            <li
-              className="flex items-center p-2 cursor-pointer hover:bg-blue-400"
-              onClick={() => handleCategoryClick('Completed Task')}
-            >
-              <CheckCircle className="mr-2" />
-              {isSidebarExpanded && <span>Completed Task</span>}
+              <HelpCircle className="mr-2" />
+              {isSidebarExpanded && <span>Help & Support</span>}
             </li>
             <li
               className="flex items-center p-2 cursor-pointer hover:bg-blue-400"
@@ -88,13 +105,26 @@ const Dashboard = () => {
               {isSidebarExpanded && <span>Logout</span>}
             </li>
           </ul>
-        </nav>
+        </div>
       </aside>
-
-      <main className="flex-1 bg-white p-6">
-        <h1 className="text-2xl text-blue-800 font-semibold mb-4">{activeCategory}</h1>
-        {activeCategory === 'ReportList' && <LeakageReportList />}
-        {activeCategory === 'PlumberChecklist Form' && <PlumberChecklistForm />}
+      <main className="flex-1 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-semibold">{activeCategory}</h1>
+          <div className="flex items-center gap-4">
+            <button onClick={toggleTheme} className="text-xl">
+              {darkMode ? <Sun /> : <Moon />}
+            </button>
+            <button className="relative">
+              <Bell />
+              <span className="absolute top-0 right-0 w-2 h-2 bg-red-600 rounded-full" />
+            </button>
+            <button>
+              <Settings />
+            </button>
+          </div>
+        </div>
+        {activeCategory === 'Report List' && <LeakageReportList />}
+        {activeCategory === 'Plumber Checklist Form' && <PlumberChecklistForm />}
         {activeCategory === 'Completed Task' && (
           <div>
             <p>Your completed tasks will appear here.</p>
@@ -112,3 +142,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
