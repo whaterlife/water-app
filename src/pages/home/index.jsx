@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Droplets } from "lucide-react";
 import { FiUser } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
@@ -8,9 +8,51 @@ import Statistics from "../statistics";
 
 const Hero = () => {
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        photo: null,
+        message: ''
+    });
 
     const handleAdminClick = () => {
-        navigate('/adlog');
+        navigate('/admin-login');
+    };
+
+    const handleChange = (e) => {
+        const { name, value, files } = e.target;
+        setFormData({
+            ...formData,
+            [name]: files ? files[0] : value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const data = new FormData();
+        data.append('name', formData.name);
+        data.append('email', formData.email);
+        data.append('photo', formData.photo);
+        data.append('message', formData.message);
+
+        try {
+            const response = await fetch('https://water-api-329b.onrender.com/reports/create', {
+                method: 'POST',
+                body: data
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to submit report');
+            }
+
+            const result = await response.json();
+            console.log('Report submitted successfully:', result);
+            alert('Report submitted successfully!');
+        } catch (error) {
+            console.error('Error submitting report:', error);
+            alert('Error submitting report. Please try again.');
+        }
     };
 
     return (
@@ -31,7 +73,7 @@ const Hero = () => {
                 {/* Form Container */}
                 <div className="relative z-10 w-full md:w-1/3 bg-white bg-opacity-10 p-8 rounded-lg shadow-lg ml-auto mr-12">
                     <h2 className="text-2xl font-bold mb-4 text-white">Report a Leakage</h2>
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleSubmit}>
                         <div>
                             <label
                                 htmlFor="name"
@@ -41,8 +83,11 @@ const Hero = () => {
                             </label>
                             <input
                                 type="text"
+                                name="name"
                                 placeholder="Full Name"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                onChange={handleChange}
+                                required
                             />
                         </div>
                         <div>
@@ -54,8 +99,11 @@ const Hero = () => {
                             </label>
                             <input
                                 type="email"
+                                name="email"
                                 placeholder="Email"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                onChange={handleChange}
+                                required
                             />
                         </div>
                         <div>
@@ -67,9 +115,11 @@ const Hero = () => {
                             </label>
                             <input
                                 type="file"
-                                id="photo"
+                                name="photo"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
                                 accept="image/*"
+                                onChange={handleChange}
+                                required
                             />
                         </div>
 
@@ -81,8 +131,11 @@ const Hero = () => {
                                 Message
                             </label>
                             <textarea
+                                name="message"
                                 placeholder="Message"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-24 resize-none"
+                                onChange={handleChange}
+                                required
                             ></textarea>
                         </div>
                         <button

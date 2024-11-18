@@ -1,20 +1,56 @@
-import React, { useState } from 'react';
-import { Home, FileText, CheckCircle, LogOut, Star, Bell, Settings, Sun, Moon, HelpCircle, Search } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Home, FileText, CheckCircle, LogOut, Star, Bell, Settings, Sun, Moon, HelpCircle, Search, Edit } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import PlumberChecklistForm from '../plist/PlumbersCheckList';
-import LeakageReportList from '../home/LeakageReportList';
+import LeaksFilled from '../../components/LeaksFilled';
+import EditProfileForm from '../../components/EditProfileForm';
+import { getProfile } from '../../services/users';
+import Swal from 'sweetalert2';
 
 const Dashboard = () => {
   const [activeCategory, setActiveCategory] = useState('My Dashboard');
   const [rating, setRating] = useState(3);
+  const [showEditLabel, setShowEditLabel] = useState(false);
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [profileData, setProfileData] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        // First try to get from localStorage
+        const storedProfile = localStorage.getItem("profileData");
+        if (storedProfile) {
+          setProfileData(JSON.parse(storedProfile));
+        }
+
+        // Then fetch fresh data
+        const freshData = await getProfile();
+        setProfileData(freshData);
+        localStorage.setItem("profileData", JSON.stringify(freshData));
+      } catch (error) {
+        console.error("Error loading profile:", error);
+        if (error.message.includes('token')) {
+          navigate('/plogin');
+        }
+      }
+    };
+
+    loadProfile();
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('userData');
+    navigate('/home');
+  };
 
   const handleCategoryClick = (category) => {
     if (category === 'Logout') {
-      navigate('/log'); 
+      handleLogout();
     } else {
       setActiveCategory(category);
     }
@@ -37,6 +73,19 @@ const Dashboard = () => {
     document.body.classList.toggle('dark');
   };
 
+  const handleEditClick = (e) => {
+    e.stopPropagation();
+    setShowEditForm(true);
+  };
+
+  if (!profileData) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-xl font-semibold">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className={`flex ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-blue-800'}`}>
       <aside
@@ -56,20 +105,46 @@ const Dashboard = () => {
             />
           </div>
         )}
-        <div className="flex items-center mb-6">
-          <img
-            src="https://savefiles.org/secure/uploads/21338?shareable_link=491"
-            alt="Profile"
-            className="w-12 h-12 rounded-full"
-          />
-          {isSidebarExpanded && (
-            <div className="ml-4">
-              <h2 className="text-lg font-semibold">Jacob Delanyo Dotsey</h2>
-              <div className="flex items-center">
-                {[...Array(rating)].map((_, index) => (
-                  <Star key={index} className="text-cyan-400" />
-                ))}
+        <div className="flex flex-col mb-6">
+          <div className="flex items-center">
+            <img
+              src={profileData.photo || "https://savefiles.org/secure/uploads/21338?shareable_link=491"}
+              alt="Profile"
+              className="w-12 h-12 rounded-full object-cover"
+            />
+            {isSidebarExpanded && (
+              <div className="ml-4">
+                <h2 className="text-lg font-semibold">
+                  {`${profileData.firstname} ${profileData.lastname}`}
+                </h2>
+                <p className="text-sm text-gray-500">{profileData.officeName}</p>
+                <p className="text-sm text-gray-500">{profileData.phoneNumber}</p>
+                <p className="text-sm text-gray-500">{profileData.email}</p>
+                <p className="text-sm text-gray-500">{profileData.location}</p>
+                <div className="flex items-center">
+                  {[...Array(rating)].map((_, index) => (
+                    <Star key={index} className="text-cyan-400" />
+                  ))}
+                </div>
               </div>
+            )}
+          </div>
+          
+          {isSidebarExpanded && (
+            <div className="flex mt-3 ml-2">
+              <button
+                className="flex items-center justify-center w-8 h-8 bg-white rounded-full hover:bg-gray-100"
+                onMouseEnter={() => setShowEditLabel(true)}
+                onMouseLeave={() => setShowEditLabel(false)}
+                onClick={handleEditClick}
+              >
+                <Edit size={16} className="text-green-600" />
+                {showEditLabel && (
+                  <span className="absolute left-20 px-2 py-1 bg-green-400 text-green-950 text-xs rounded-md whitespace-nowrap">
+                    Edit Profile
+                  </span>
+                )}
+              </button>
             </div>
           )}
         </div>
@@ -109,7 +184,11 @@ const Dashboard = () => {
       </aside>
       <main className="flex-1 p-6">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-semibold">{activeCategory}</h1>
+          <h1 className="text-2xl font-semibold">
+            {activeCategory === 'My Dashboard' 
+              ? `Welcome, ${profileData.firstname}!` 
+              : activeCategory}
+          </h1>
           <div className="flex items-center gap-4">
             <button onClick={toggleTheme} className="text-xl">
               {darkMode ? <Sun /> : <Moon />}
@@ -123,7 +202,7 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
-        {activeCategory === 'Report List' && <LeakageReportList />}
+        {activeCategory === 'Report List' && <LeaksFilled isPlumberView={false} />}
         {activeCategory === 'Plumber Checklist Form' && <PlumberChecklistForm />}
         {activeCategory === 'Completed Task' && (
           <div>
@@ -137,6 +216,12 @@ const Dashboard = () => {
           </div>
         )}
       </main>
+      {showEditForm && (
+        <EditProfileForm
+          onClose={() => setShowEditForm(false)}
+          currentUser={profileData}
+        />
+      )}
     </div>
   );
 };

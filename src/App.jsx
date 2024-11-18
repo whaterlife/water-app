@@ -1,117 +1,105 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Hero from "./pages/home";
-import LeakReportForm from "./pages/home/LeakReportForm";
-import PlumbersChecklist from "./pages/plist/PlumbersCheckList";
-import Dashboard from "./pages/plumber-dashboard/index";
-import UserSignup from "./pages/user/UserSignUp";
-import LogIn from "./pages/user/UserLogin";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import Home from "./pages/home/index";
+import About from "./pages/about/index";
+import UserSignUp from "./pages/user/UserSignUp";
 import UserOther from "./pages/user/UserOther";
-import Plumbersignup from "./pages/plumber/PlumberSignUp";
+import PlumberSignUp from "./pages/plumber/PlumberSignUp";
 import PlumberLogin from "./pages/plumber/PlumberLogin";
-import PlumberList from "./pages/plist/PlumberList";
-import Statistics from "./pages/statistics";
+import Dashboard from "./pages/plumber-dashboard/index";
+import LeakageForm from "./pages/home/LeakReportForm";
+import PlumberChecklistForm from "./pages/plist/PlumbersCheckList";
 import LeakageReportList from "./pages/home/LeakageReportList";
+import Welcome from "./pages/welcome/index"
 import AdminDashboard from "./pages/admin-dashboard";
-import AdminLogin from "./pages/admin-dashboard/login";
-import Resources from "./pages/resources";
-import ResourcesAd from "./pages/admin-dashboard/resourcesad";
-import Pipes from "./pages/education/pipes-fittings";
-import WaterConservationTips from "./pages/education/water-conservation-tips";
-import CampaignsEvents from "./pages/eventsandcampaigns";
-import WelcomeSection from "./pages/welcome";
+import AdminLogin from "./pages/admin-dashboard/adlogin";
 
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("userToken");
+  if (!token) {
+    return <Navigate to="/plogin" replace />;
+  }
+  return children;
+};
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      path: '/log',
-      element: <LogIn />,
-    },
-    {
-      path: '/',
-      element: <WelcomeSection />,
-    },
-    {
-      path: '/home',
-      element: <Hero />,
-    },
-    {
-      path: '/sign',
-      element: <UserSignup/>,
-    },
-     
-    {
-      path: '/list',
-      element: <PlumberList/>
-    },
-    {
-      path: '/checklist',
-      element: <PlumbersChecklist />,
-    },
-    {
-      path: '/dash',
-      element: <Dashboard />,
-    },
+  return (
+    <Router>
+      <Routes>
+        
+        <Route path="/" element={<Welcome />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+       
+        <Route path="/sign" element={<UserSignUp />} />
+        <Route path="/user-login" element={<UserOther />} />
+        <Route 
+          path="/leak" 
+          element={
+            <ProtectedRoute>
+              <LeakageForm />
+            </ProtectedRoute>
+          } 
+        />
 
-    {
-      path: '/useother',
-      element: <UserOther />,
-    },
-    {
-      path: '/plumber',
-      element: <Plumbersignup />,
-    },
-    {
-      path: '/plogin',
-      element: <PlumberLogin />,
-    },
-    {
-      path: '/leak',
-      element: <LeakReportForm />,
-    },
-    {
-      path: '/stat',
-      element: <Statistics/>,
-    },
-    {
-      path: 'reportlist',
-      element: <LeakageReportList/>,
-    },
+        <Route path="/psign" element={<PlumberSignUp />} />
+        <Route path="/plogin" element={<PlumberLogin />} />
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/plumber-checklist" 
+          element={
+            <ProtectedRoute>
+              <PlumberChecklistForm />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/leakage-reports" 
+          element={
+            <ProtectedRoute>
+              <LeakageReportList />
+            </ProtectedRoute>
+          } 
+        />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route 
+          path="/admin-dashboard" 
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } 
+        />
+         
 
-    {
-      path: 'admin',
-      element: <AdminDashboard />,
-    },
-    {
-      path: '/adlog',
-      element: <AdminLogin/>,
-    },
-    {
-      path: '/adres',
-      element: <ResourcesAd/>,
-    },
-    {
-      path: '/res',
-      element: <Resources/>,
-    },
-    {
-      path: '/pipe',
-      element: <Pipes/>,
-    },
-    {
-      path: '/water',
-      element: <WaterConservationTips/>,
-    },
-    {
-      path: '/camp',
-      element: <CampaignsEvents/>,
-    },
-
-
-
-  ]);
-
-  return <RouterProvider router={router} />;
+        {/* Catch all route - 404 */}
+        <Route 
+          path="*" 
+          element={
+            <div className="flex items-center justify-center min-h-screen">
+              <div className="text-center">
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">404</h1>
+                <p className="text-gray-600 mb-4">Page not found</p>
+                <button 
+                  onClick={() => window.history.back()} 
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                  Go Back
+                </button>
+              </div>
+            </div>
+          } 
+        />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

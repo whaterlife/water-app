@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Home } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 const campaigns = [
   { id: 1, title: "Water Conservation Workshop", image: "src/assets/images/flyer1.jpg", description: "Join our workshop on conserving water to help the environment. 28/12/2024 Labone-Junction" },
@@ -12,6 +13,7 @@ const campaigns = [
 const CampaignsEvents = () => {
   const [selectedCampaign, setSelectedCampaign] = useState(null);
   const [expandedCard, setExpandedCard] = useState(null);
+  const navigate = useNavigate();
 
   const openModal = (campaign) => {
     setSelectedCampaign(campaign);
@@ -23,11 +25,15 @@ const CampaignsEvents = () => {
     setExpandedCard(expandedCard === id ? null : id);
   };
 
+  const handleHomeClick = () => {
+    navigate('/camp');
+  };
+
   return (
     <section className="p-8 bg-white">
       <div className="flex justify-between items-center mb-8">
         <button
-          onClick={() => window.location.href = "/"}
+          onClick={handleHomeClick}
           className="text-blue-700 hover:text-blue-900 transition-colors duration-200"
         >
           <Home size={32} />

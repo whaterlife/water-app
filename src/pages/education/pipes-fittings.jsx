@@ -6,7 +6,7 @@ const Pipes = () => {
         <section className="relative text-lg text-blue-500 bg-[url('src/assets/images/pback.png')] bg-no-repeat bg-cover bg-center py-10 px-4">
             <div className="absolute inset-0 bg-black opacity-50"></div>
                <div className="relative z-20 max-w-screen-md mx-auto mb-6">
-                <a href="/" className="flex items-center text-blue-300 hover:text-blue-500">
+                <a href="/home" className="flex items-center text-blue-300 hover:text-blue-500">
                     <FaArrowLeft className="mr-2" /> Back to Home
                 </a>
             </div>

@@ -1,67 +1,65 @@
 import { useState } from "react"
-import { Eye,EyeOff } from "lucide-react"
-import { Link } from "react-router-dom"
-import { useNavigate} from "react-router-dom"
+import { Eye, EyeOff } from "lucide-react"
+import { Link, useNavigate } from "react-router-dom"
 import RootLayout from "../../layouts/RootLayout"
 import Swal from "sweetalert2"
-
+import { apiSignup } from "../../services/users"
 
 const UserSignUp = () => {
   const [loading, setLoading] = useState(false)
-
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
+
     try {
-      // Prepare a data to be sent to the backend
-      setLoading(true)
-      const formData = new FormData(event.target); // takes data from the form
-      const firstname = formData.get("firstname");
-      const lastname = formData.get("lastname");
-      const location = formData.get("location");
-      const email = formData.get("email");
+      const formData = new FormData(event.target);
       const password = formData.get("password");
       const confirmpassword = formData.get("confirmpassword");
 
-      //check if passwords match
-      // if (password!== confirmpassword)
+      // Password validation
+      if (password !== confirmpassword) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Password Mismatch',
+          text: 'Passwords do not match. Please try again.',
+        });
+        return;
+      }
 
+      const payload = {
+        firstname: formData.get("firstname"),
+        lastname: formData.get("lastname"),
+        location: formData.get("location"),
+        email: formData.get("email"),
+        password: password
+      };
 
-      //if key and value are same pick one  eg firstname , if not then state both sepearte with a colon(:)eg firsrname:firstname, 
-      const payload = { firstname: firstname, lastname: lastname, location: location, email: email, password: password }
-      const response = await apiSignup(payload);
-      console.log(response.data);
+      await apiSignup(payload);
 
-      // Show a success notification
       Swal.fire({
         icon: 'success',
         title: 'Registration Successful',
         text: 'You have successfully registered!',
       });
 
-      navigate("/user-login") // takes user to the login page after a successful registration
+      navigate("/user-login");
 
     } catch (error) {
-      console.log(error);
-
-      // Show an error notification
+      console.error('Registration error:', error);
       Swal.fire({
         icon: 'error',
         title: 'Registration Failed',
-        text: 'There was an error during registration. Please try again.',
+        text: error.message || 'There was an error during registration. Please try again.',
       });
-
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
+  };
 
-
-
-  }
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   return (
     <RootLayout>
       <div className='school'>
@@ -174,7 +172,7 @@ const UserSignUp = () => {
 
               {/* SIGN-UP link */}
               <p >
-                Already have an account?{" "}<Link to="/log"className="text-center mt-4 text-blue-700 text-sm" >Login</Link>
+                Already have an account?{" "}<Link to="/user-login" className="text-center mt-4 text-blue-700 text-sm" >Login</Link>
               </p>
             </div>
           </div>

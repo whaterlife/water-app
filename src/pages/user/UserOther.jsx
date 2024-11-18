@@ -1,15 +1,49 @@
 import React, { useState } from 'react';
 import RootLayout from '../../layouts/RootLayout';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { apiLogin } from '../../services/users';
+import Swal from 'sweetalert2';
 
 const UserOther = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Logic to handle login goes here 
-    console.log('Email:', email, 'Password:', password);
+    setLoading(true);
+
+    try {
+      const payload = {
+        email,
+        password
+      };
+
+      const response = await apiLogin(payload);
+
+      if (response.token) {
+        localStorage.setItem('userToken', response.token);
+      }
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Successful',
+        text: 'Welcome back!',
+      });
+
+      navigate('/leak');
+
+    } catch (error) {
+      console.error('Login error:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: error.message || 'Invalid email or password. Please try again.',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,15 +81,21 @@ const UserOther = () => {
             </div>
 
             <div className="flex items-center justify-between">
-              <Link to="/leak" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-                Log In
-              </Link>
+              <button 
+                type="submit" 
+                className={`bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 ${
+                  loading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                disabled={loading}
+              >
+                {loading ? 'Logging in...' : 'Log In'}
+              </button>
             </div>
           </form>
           <div>
             <Link to="/sign" className="mt-4 text-center text-sm text-blue-500 hover:underline"> 
               Don't have an account? Sign Up!
-           </Link>
+            </Link>
           </div>
         </div>
       </div>

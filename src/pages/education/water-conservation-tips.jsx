@@ -12,7 +12,7 @@ const WaterConservationTips = () => {
             <div className="absolute inset-0 bg-black opacity-60"></div>
             
             <div className="relative z-20 max-w-screen-md mx-auto mb-6">
-                <a href="/" className="flex items-center text-blue-300 hover:text-blue-500">
+                <a href="/home" className="flex items-center text-blue-300 hover:text-blue-500">
                     <FaArrowLeft className="mr-2" /> Back to Home
                 </a>
             </div>

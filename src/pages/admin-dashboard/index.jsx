@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Home, FileText, CheckCircle, LogOut, Users, BookPlus, PenSquare, Bell, Settings, Sun, Moon, HelpCircle, Search, PenLine } from 'lucide-react';
+import { Home, FileText, CheckCircle, LogOut, Users, BookPlus, PenSquare, Bell, Settings, Sun, Moon, HelpCircle, Search, PenLine, Droplet } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import PlumberList from '../plist/PlumberList';
 import LeakageReportList from '../home/LeakageReportList';
 import ResourcesAd from './resourcesad';
+import LeaksFilled from '../../components/LeaksFilled';
+import CampaignsEvents from '../eventsandcampaigns';
 
 const AdminDashboard = () => {
   const [activeCategory, setActiveCategory] = useState('Water4Life Dashboard');
@@ -14,7 +16,7 @@ const AdminDashboard = () => {
 
   const handleCategoryClick = (category) => {
     if (category === 'Logout') {
-      navigate('/');
+      navigate('/home');
     } else {
       setActiveCategory(category);
     }
@@ -37,6 +39,7 @@ const AdminDashboard = () => {
     { label: 'List of Plumbers', icon: <Users />, category: 'List of Plumbers' },
     { label: 'Plumbers Work Done', icon: <CheckCircle />, category: 'Plumbers Work Done' },
     { label: 'Leakage Report', icon: <FileText />, category: 'Leakage Report' },
+    { label: 'Leaks ', icon: <Droplet />, category: 'Leaks Filled' },
     { label: 'Resources', icon: <BookPlus />, category: 'Resources' },
     { label: 'Events & Campaigns', icon: <PenSquare />, category: 'Events/Campaigns' },
     { label: 'Plumbing Materials', icon: <PenLine />, category: 'plumbing materials(sales)' },
@@ -134,6 +137,8 @@ const AdminDashboard = () => {
           <div>Your completed plumber work reports will appear here.</div>
         )}
         {activeCategory === 'Leakage Report' && <LeakageReportList />}
+        {activeCategory === 'Leaks Filled' && <LeaksFilled isPlumberView={false} />}
+        {activeCategory === 'Events/Campaigns' && <CampaignsEvents />}
       </main>
     </div>
   );

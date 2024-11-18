@@ -77,7 +77,7 @@ const Navbar = () => {
           onMouseLeave={() => setShowPlumberLabel(false)}
           className="relative flex items-center justify-center w-14 h-14 bg-white rounded-full hover:bg-gray-200 mr-6"
         >
-          <Link to="/plumber">
+          <Link to="/psign">
             <User size={35} className="text-blue-800" />
           </Link>
           {showPlumberLabel && (

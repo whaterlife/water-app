@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RootLayout from "../../layouts/RootLayout";
 import Swal from "sweetalert2";
+import { apiSignup } from "../../services/users";
 
 const Plumbersignup = () => {
   const [loading, setLoading] = useState(false);
@@ -11,22 +11,38 @@ const Plumbersignup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
+
     try {
-      setLoading(true);
       const formData = new FormData(event.target);
-      const buisnessname = formData.get("buisnessname");
-      const firstname = formData.get("firstname");
-      const lastname = formData.get("lastname");
-      const phone = formData.get("phone");
-      const location = formData.get("location");
-      const photo = formData.get("photo");
-      const email = formData.get("email");
       const password = formData.get("password");
       const confirmpassword = formData.get("confirmpassword");
 
-      const payload = { buisnessname, firstname, lastname, phone, location, photo, email, password };
-      const response = await apiSignup(payload);
-      console.log(response.data);
+      if (password !== confirmpassword) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Password Mismatch',
+          text: 'Passwords do not match. Please try again.',
+        });
+        return;
+      }
+
+      const payload = {
+        officeName: formData.get("officeName"),
+        firstname: formData.get("firstname"),
+        lastname: formData.get("lastname"),
+        phoneNumber: formData.get("phoneNumber"),
+        location: formData.get("location"),
+        email: formData.get("email"),
+        password: password
+      };
+
+      const photoFile = formData.get("photo");
+      if (photoFile && photoFile.size > 0) {
+        payload.photo = photoFile;
+      }
+
+      await apiSignup(payload);
 
       Swal.fire({
         icon: "success",
@@ -34,13 +50,14 @@ const Plumbersignup = () => {
         text: "You have successfully registered!",
       });
 
-      navigate("/log");
+      navigate("/plogin");
+
     } catch (error) {
-      console.log(error);
+      console.error('Registration error:', error);
       Swal.fire({
         icon: "error",
         title: "Registration Failed",
-        text: "There was an error during registration. Please try again.",
+        text: error.message || "There was an error during registration. Please try again.",
       });
     } finally {
       setLoading(false);
@@ -59,8 +76,8 @@ const Plumbersignup = () => {
               <h2 className="text-4xl font-extrabold text-center text-blue-800 mb-6">Plumber Signup</h2>
               <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor="buisnessname" className="block text-blue-700 text-sm font-bold mb-2">Business Name</label>
-                  <input name="buisnessname" type="text" id="buisnessname" placeholder="Enter Business Name" className="w-full p-2 rounded bg-white-100 border border-cyan-200 focus:outline-none focus:ring-2 focus:ring-blue-300" required />
+                  <label htmlFor="officeName" className="block text-blue-700 text-sm font-bold mb-2">Office Name</label>
+                  <input name="officeName" type="text" id="officeName" placeholder="Enter Office Name" className="w-full p-2 rounded bg-white-100 border border-cyan-200 focus:outline-none focus:ring-2 focus:ring-blue-300" required />
                 </div>
 
                 <div className="flex gap-4">
@@ -75,8 +92,8 @@ const Plumbersignup = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-blue-700 text-sm font-bold mb-2">Phone Number</label>
-                  <input name="phone" type="tel" id="phone" placeholder="Enter Phone Number" className="w-full p-2 rounded bg-white-100 border border-cyan-200 focus:outline-none focus:ring-2 focus:ring-blue-300" required />
+                  <label htmlFor="phoneNumber" className="block text-blue-700 text-sm font-bold mb-2">Phone Number</label>
+                  <input name="phoneNumber" type="tel" id="phoneNumber" placeholder="Enter Phone Number" className="w-full p-2 rounded bg-white-100 border border-cyan-200 focus:outline-none focus:ring-2 focus:ring-blue-300" required />
                 </div>
 
                 <div>
@@ -125,9 +142,11 @@ const Plumbersignup = () => {
                   <a href="#" className="text-blue-700 text-sm font-bold">Forgot Password?</a>
                 </div>
 
-                <button type="submit" className="w-full bg-blue-600 text-white text-lg font-bold py-2 px-4 rounded hover:bg-cyan-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                  {loading ? "Loading... " : "Register"}
+                <button type="submit" className="w-full bg-blue-600 text-white text-lg font-bold py-2 px-4 rounded hover:bg-cyan-700 focus:outline-none focus:ring-4 focus:ring-blue-300"> {loading ? "Loading... " : "Register"}
+
+
                 </button>
+
               </form>
 
               <div className="my-5 flex items-center">

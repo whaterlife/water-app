@@ -1,30 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { List, Grid } from "lucide-react";
-
-const plumbers = Array.from({ length: 20 }, (_, index) => ({
-    id: index + 1,
-    name: `Plumber ${index + 1}`,
-    location: `City ${index + 1}`,
-    contact: `123-456-78${index}`,
-    image: `https://via.placeholder.com/150`,
-}));
 
 const PlumberList = () => {
     const [isGridView, setIsGridView] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
+    const [plumbers, setPlumbers] = useState([]);
     const itemsPerPage = 9;
     const totalPages = Math.ceil(plumbers.length / itemsPerPage);
     const currentItems = plumbers.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
+
+    useEffect(() => {
+        const fetchPlumbers = async () => {
+            try {
+                const response = await fetch('https://water-api-329b.onrender.com/users/all', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EwNDQzOTI1YTIwMjJkZGQ2OTc5NiIsImlhdCI6MTczMTg2OTQ0NywiZXhwIjoxNzMxOTU1ODQ3fQ.r9Y_pdl84liwocIfOEDwCkDCWGP3ALOprPLQyFdktig`,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch plumbers');
+                }
+                const data = await response.json();
+                setPlumbers(data.map(user => ({
+                    id: user.id,
+                    name: `${user.firstname} ${user.lastname}`,
+                    location: user.location,
+                    contact: user.phoneNumber,
+                    image: user.photo ? `https://water-api-329b.onrender.com/${user.photo}` : 'https://via.placeholder.com/150',
+                })));
+            } catch (error) {
+                console.error('Error fetching plumbers:', error);
+            }
+        };
+
+        fetchPlumbers();
+    }, []);
+
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
     return (
         <section className="p-6 bg-gray-100 min-h-screen">
-
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold text-blue-500">Our Plumbers</h1>
                 <button
