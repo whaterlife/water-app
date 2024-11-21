@@ -6,7 +6,7 @@ export const leakService = {
   // Create a new leak report
   createLeak: async (payload) => {
     try {
-      const response = await apiClient.post('/leakforms/create', payload);
+      const response = await apiClient.post(`${LEAKS_ENDPOINT}/create`, payload);
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Failed to create leak report');
@@ -16,7 +16,7 @@ export const leakService = {
   // Get all leak reports
   getAllLeaks: async () => {
     try {
-      const response = await apiClient.get('/leakforms/all');
+      const response = await apiClient.get(`${LEAKS_ENDPOINT}/all`);
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Failed to fetch leak reports');
@@ -26,7 +26,7 @@ export const leakService = {
   // Get a single leak report
   getLeakById: async (leakId) => {
     try {
-      const response = await apiClient.get('/leakforms/Id');
+      const response = await apiClient.get(`${LEAKS_ENDPOINT}/${leakId}`);
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Failed to fetch leak report');
@@ -70,6 +70,26 @@ export const leakService = {
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Failed to assign plumber');
+    }
+  },
+
+  // New API: Get leaks by user
+  getLeaksByUser: async (userId) => {
+    try {
+      const response = await apiClient.get(`${LEAKS_ENDPOINT}/user/${userId}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || 'Failed to fetch leaks by user');
+    }
+  },
+
+  // New API: Get summary of leaks
+  getLeakSummary: async () => {
+    try {
+      const response = await apiClient.get(`${LEAKS_ENDPOINT}/summary`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || 'Failed to fetch leak summary');
     }
   }
 };

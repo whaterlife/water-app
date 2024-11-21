@@ -11,11 +11,10 @@ const AdminLogin = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('https://water-api-329b.onrender.com/users/login', {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/users/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EwNDQzOTI1YTIwMjJkZGQ2OTc5NiIsImlhdCI6MTczMTg2OTQ0NywiZXhwIjoxNzMxOTU1ODQ3fQ.r9Y_pdl84liwocIfOEDwCkDCWGP3ALOprPLQyFdktig`,
                 },
                 body: JSON.stringify({ email, password }),
             });
@@ -25,7 +24,7 @@ const AdminLogin = () => {
             }
 
             const data = await response.json();
-            // Assuming the response contains a token
+            // Store the token securely
             localStorage.setItem('adminToken', data.token);
 
             // Navigate to the admin dashboard

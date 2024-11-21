@@ -37,11 +37,14 @@ const LeakReportForm = () => {
         data.append('photo', formData.photo);
         data.append('signature', formData.signature);
 
+        const token = localStorage.getItem('userToken');
+        console.log('Token:', token);
+
         try {
-            const response = await fetch('https://water-api-329b.onrender.com/leakforms/create', {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/leakforms/create`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EwNDQzOTI1YTIwMjJkZGQ2OTc5NiIsImlhdCI6MTczMTg2OTQ0NywiZXhwIjoxNzMxOTU1ODQ3fQ.r9Y_pdl84liwocIfOEDwCkDCWGP3ALOprPLQyFdktig`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: data
             });
@@ -62,7 +65,7 @@ const LeakReportForm = () => {
 
     return (
         <RootLayout>
-            <section className="flex justify-center items-center min-h-screen pt-20 pb-10 bg-[url('src/assets/images/pipes.jpg')]">
+            <section className="flex justify-center items-center min-h-screen pt-20 pb-10 bg-[url('public/images/pipes.jpg')]">
                 <div className="p-8 rounded-lg shadow-lg w-full max-w-md">
                     <h1 className="text-3xl font-bold text-blue-500 mb-6 text-center">
                         Water Leakage

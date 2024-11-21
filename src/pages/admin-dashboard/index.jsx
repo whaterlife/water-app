@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Home, FileText, CheckCircle, LogOut, Users, BookPlus, PenSquare, Bell, Settings, Sun, Moon, HelpCircle, Search, PenLine, Droplet } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import PlumberList from '../plist/PlumberList';
@@ -6,13 +6,28 @@ import LeakageReportList from '../home/LeakageReportList';
 import ResourcesAd from './resourcesad';
 import LeaksFilled from '../../components/LeaksFilled';
 import CampaignsEvents from '../eventsandcampaigns';
+import { reportService } from '../../services/report';
 
 const AdminDashboard = () => {
   const [activeCategory, setActiveCategory] = useState('Water4Life Dashboard');
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [reports, setReports] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const data = await reportService.getAllReports();
+        setReports(data);
+      } catch (error) {
+        console.error('Error fetching reports:', error);
+      }
+    };
+
+    fetchReports();
+  }, []);
 
   const handleCategoryClick = (category) => {
     if (category === 'Logout') {

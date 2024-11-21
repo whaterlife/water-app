@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import RootLayout from "../../layouts/RootLayout";
 import About from "../about";
 import Statistics from "../statistics";
+import { reportService } from "../../services/report";
+import Swal from "sweetalert2";
 
 const Hero = () => {
     const navigate = useNavigate();
@@ -12,7 +14,8 @@ const Hero = () => {
         name: '',
         email: '',
         photo: null,
-        message: ''
+        message: '',
+        location: ''
     });
 
     const handleAdminClick = () => {
@@ -31,33 +34,28 @@ const Hero = () => {
         e.preventDefault();
 
         const data = new FormData();
-        data.append('name', formData.name);
+        data.append('fullName', formData.name);
         data.append('email', formData.email);
         data.append('photo', formData.photo);
         data.append('message', formData.message);
+        data.append('location', formData.location);
 
         try {
-            const response = await fetch('https://water-api-329b.onrender.com/reports/create', {
-                method: 'POST',
-                body: data
-            });
+            const response = await reportService.createReport(data);
 
-            if (!response.ok) {
-                throw new Error('Failed to submit report');
+            if (response) {
+                console.log('Report submitted successfully:', response);
+                Swal.fire('Success', 'Report submitted successfully!', 'success');
             }
-
-            const result = await response.json();
-            console.log('Report submitted successfully:', result);
-            alert('Report submitted successfully!');
         } catch (error) {
             console.error('Error submitting report:', error);
-            alert('Error submitting report. Please try again.');
+            Swal.fire('Error', 'Error submitting report. Please try again.', 'error');
         }
     };
 
     return (
         <RootLayout>
-            <section className="relative bg-cover bg-center h-screen bg-[url('src/assets/images/pipes.jpg')] flex items-center">
+            <section className="relative bg-cover bg-center h-screen bg-[url('images/pipes.jpg')] flex items-center">
                 <div className="absolute inset-0"></div>
                 <div className="absolute top-35 left-20 z-10 max-w-md">
                     <h5 className="text-2xl font-bold text-white flex items-center pb-10">WELCOME TO</h5>
@@ -75,12 +73,7 @@ const Hero = () => {
                     <h2 className="text-2xl font-bold mb-4 text-white">Report a Leakage</h2>
                     <form className="space-y-4" onSubmit={handleSubmit}>
                         <div>
-                            <label
-                                htmlFor="name"
-                                className="text-md font-medium text-white"
-                            >
-                                Name
-                            </label>
+                            <label htmlFor="name" className="text-md font-medium text-white">Name</label>
                             <input
                                 type="text"
                                 name="name"
@@ -91,12 +84,7 @@ const Hero = () => {
                             />
                         </div>
                         <div>
-                            <label
-                                htmlFor="email"
-                                className="text-md font-medium text-white"
-                            >
-                                Email
-                            </label>
+                            <label htmlFor="email" className="text-md font-medium text-white">Email</label>
                             <input
                                 type="email"
                                 name="email"
@@ -107,12 +95,7 @@ const Hero = () => {
                             />
                         </div>
                         <div>
-                            <label
-                                htmlFor="photo"
-                                className="text-md font-medium text-white"
-                            >
-                                Photo
-                            </label>
+                            <label htmlFor="photo" className="text-md font-medium text-white">Photo</label>
                             <input
                                 type="file"
                                 name="photo"
@@ -122,14 +105,8 @@ const Hero = () => {
                                 required
                             />
                         </div>
-
                         <div>
-                            <label
-                                htmlFor="message"
-                                className="text-md font-medium text-white"
-                            >
-                                Message
-                            </label>
+                            <label htmlFor="message" className="text-md font-medium text-white">Message</label>
                             <textarea
                                 name="message"
                                 placeholder="Message"
@@ -137,6 +114,17 @@ const Hero = () => {
                                 onChange={handleChange}
                                 required
                             ></textarea>
+                        </div>
+                        <div>
+                            <label htmlFor="location" className="text-md font-medium text-white">Location</label>
+                            <input
+                                type="text"
+                                name="location"
+                                placeholder="Enter location"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                onChange={handleChange}
+                                required
+                            />
                         </div>
                         <button
                             type="submit"

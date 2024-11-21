@@ -1,50 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import { Droplet, Info } from 'lucide-react';
+import { Droplet, Info, ChevronLeft, ChevronRight } from 'lucide-react';
 import Swal from 'sweetalert2';
+import { leakService } from '../services/leaks';
 
 const LeaksFilled = () => {
   const [leaksData, setLeaksData] = useState([]);
   const [singleLeak, setSingleLeak] = useState(null);
   const [leakId, setLeakId] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const leaksPerPage = 10; // Number of leaks to show per page
 
   useEffect(() => {
     const fetchLeaksData = async () => {
       try {
-        const response = await fetch('https://water-api-329b.onrender.com/leakforms/all', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EwNDQzOTI1YTIwMjJkZGQ2OTc5NiIsImlhdCI6MTczMTg2OTQ0NywiZXhwIjoxNzMxOTU1ODQ3fQ.r9Y_pdl84liwocIfOEDwCkDCWGP3ALOprPLQyFdktig`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch leak forms');
-        }
-
-        const data = await response.json();
-        setLeaksData(data);
+        setLoading(true);
+        const data = await leakService.getAllLeaks();
+        // Sort by date in descending order (newest first)
+        const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setLeaksData(sortedData);
       } catch (error) {
         console.error('Error fetching leak forms:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchLeaksData();
   }, []);
 
+  // Get current leaks
+  const indexOfLastLeak = currentPage * leaksPerPage;
+  const indexOfFirstLeak = indexOfLastLeak - leaksPerPage;
+  const currentLeaks = leaksData.slice(indexOfFirstLeak, indexOfLastLeak);
+  const totalPages = Math.ceil(leaksData.length / leaksPerPage);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Previous page
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Next page
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   const fetchSingleLeak = async () => {
     try {
-      const response = await fetch(`https://water-api-329b.onrender.com/leakforms/${leakId}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EwNDQzOTI1YTIwMjJkZGQ2OTc5NiIsImlhdCI6MTczMTg2OTQ0NywiZXhwIjoxNzMxOTU1ODQ3fQ.r9Y_pdl84liwocIfOEDwCkDCWGP3ALOprPLQyFdktig`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch the leak');
-      }
-
-      const data = await response.json();
+      const data = await leakService.getLeakById(leakId);
       setSingleLeak(data);
     } catch (error) {
       console.error('Error fetching the leak:', error);
@@ -121,7 +131,7 @@ const LeaksFilled = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {leaksData.map((leak) => (
+            {currentLeaks.map((leak) => (
               <tr key={leak.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">{leak.gpsAddress}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{`${leak.firstName} ${leak.lastName}`}</td>
@@ -150,10 +160,72 @@ const LeaksFilled = () => {
         </table>
       </div>
 
-      <div className="mt-4 flex justify-center">
-        <button className="text-blue-500 hover:text-blue-700">
-          Load More
-        </button>
+      {/* Pagination Controls */}
+      <div className="mt-4 flex items-center justify-between px-4 py-3 sm:px-6">
+        <div className="flex flex-1 justify-between sm:hidden">
+          <button
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
+            className={`relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md
+              ${currentPage === 1 
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                : 'bg-white text-gray-700 hover:bg-gray-50'}`}
+          >
+            Previous
+          </button>
+          <button
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages}
+            className={`relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md
+              ${currentPage === totalPages 
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                : 'bg-white text-gray-700 hover:bg-gray-50'}`}
+          >
+            Next
+          </button>
+        </div>
+        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm text-gray-700">
+              Showing <span className="font-medium">{indexOfFirstLeak + 1}</span> to{' '}
+              <span className="font-medium">
+                {Math.min(indexOfLastLeak, leaksData.length)}
+              </span>{' '}
+              of <span className="font-medium">{leaksData.length}</span> results
+            </p>
+          </div>
+          <div>
+            <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+              <button
+                onClick={goToPreviousPage}
+                disabled={currentPage === 1}
+                className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              {[...Array(totalPages)].map((_, index) => (
+                <button
+                  key={index + 1}
+                  onClick={() => paginate(index + 1)}
+                  className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold
+                    ${currentPage === index + 1
+                      ? 'z-10 bg-blue-600 text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+                      : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'
+                    }`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+              <button
+                onClick={goToNextPage}
+                disabled={currentPage === totalPages}
+                className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </nav>
+          </div>
+        </div>
       </div>
     </div>
   );

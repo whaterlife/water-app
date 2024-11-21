@@ -5,7 +5,7 @@ const WelcomeSection = () => {
         <section
             className="relative h-screen bg-cover bg-center bg-no-repeat text-white flex items-center justify-center"
             style={{
-                backgroundImage: `url('./src/assets/images/work.jpg')`, 
+                backgroundImage: `url('./images/work.jpg')`, 
             }}
         >
             <div className="absolute inset-0 bg-black opacity-50"></div>

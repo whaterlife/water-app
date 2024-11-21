@@ -6,7 +6,7 @@ const WaterConservationTips = () => {
         <section
             className="relative bg-cover bg-center bg-no-repeat text-white py-10 px-6"
             style={{
-                backgroundImage: `url('src/assets/images/this.jpg')`, 
+                backgroundImage: `url('images/this.jpg')`, 
             }}
         >
             <div className="absolute inset-0 bg-black opacity-60"></div>

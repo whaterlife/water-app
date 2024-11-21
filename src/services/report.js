@@ -4,7 +4,11 @@ const REPORTS_ENDPOINT = '/reports';
 export const reportService = {
   createReport: async (payload) => {
     try {
-      const response = await apiClient.post(`${REPORTS_ENDPOINT}/create`, payload);
+      const response = await apiClient.post(`${REPORTS_ENDPOINT}/create`, payload, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Failed to create report');

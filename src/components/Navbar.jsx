@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <nav className="text-cyan-600 px-8 relative z-10">
       <div className="container mx-auto flex justify-between items-center gap-x-4">
-        <img src="./src/assets/images/hat.jpg" alt="logo" />
+        <img src="./images/hat.jpg" alt="logo" />
         <ul className="hidden md:flex space-x-8">
           <li className="flex items-center space-x-1">
             <Info size={18} />

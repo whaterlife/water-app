@@ -16,26 +16,33 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showEditForm, setShowEditForm] = useState(false);
   const [profileData, setProfileData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const loadProfile = async () => {
       try {
+        setLoading(true);
         // First try to get from localStorage
         const storedProfile = localStorage.getItem("profileData");
         if (storedProfile) {
           setProfileData(JSON.parse(storedProfile));
+          setLoading(false);
         }
 
         // Then fetch fresh data
         const freshData = await getProfile();
-        setProfileData(freshData);
-        localStorage.setItem("profileData", JSON.stringify(freshData));
+        if (freshData) {
+          setProfileData(freshData);
+          localStorage.setItem("profileData", JSON.stringify(freshData));
+        }
       } catch (error) {
         console.error("Error loading profile:", error);
         if (error.message.includes('token')) {
           navigate('/plogin');
         }
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -78,12 +85,17 @@ const Dashboard = () => {
     setShowEditForm(true);
   };
 
-  if (!profileData) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-xl font-semibold">Loading...</div>
       </div>
     );
+  }
+
+  if (!profileData) {
+    navigate('/plogin');
+    return null;
   }
 
   return (
@@ -108,7 +120,7 @@ const Dashboard = () => {
         <div className="flex flex-col mb-6">
           <div className="flex items-center">
             <img
-              src={profileData.photo || "https://savefiles.org/secure/uploads/21338?shareable_link=491"}
+              src={`https://savefiles.org/${profileData.photo}?shareable_link=543`}
               alt="Profile"
               className="w-12 h-12 rounded-full object-cover"
             />

@@ -12,52 +12,34 @@ export const apiSignup = async (payload) => {
 export const apiLogin = async (payload) => {
     try {
         const response = await apiClient.post("/users/login", payload);
-        if (response.data && response.data.token) {
-            localStorage.setItem("userToken", response.data.token);
+        if (response.data && response.data.accessToken) {
+            localStorage.setItem("userToken", response.data.accessToken);
 
-            const profileResponse = await apiClient.get("/users/me", {
-                headers: {
-                    Authorization: `Bearer ${response.data.token}`
-                }
-            });
-
-            localStorage.setItem("profileData", JSON.stringify(profileResponse.data));
+            const profileResponse = await apiClient.get("/users/me");
+            if (profileResponse.data) {
+                localStorage.setItem("profileData", JSON.stringify(profileResponse.data));
+            }
         }
         return response.data;
     } catch (error) {
         console.error("Login error:", error);
+        localStorage.removeItem("userToken");
+        localStorage.removeItem("profileData");
         throw new Error(error.response?.data?.message || "Login failed. Please try again.");
     }
 };
 
 export const getProfile = async () => {
-    const token = localStorage.getItem("userToken");
-    if (!token) {
-        console.error("No token found");
-        return null;
-    }
-
     try {
-        const response = await apiClient.get("/users/me", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
+        const token = localStorage.getItem("userToken");
+        if (!token) {
+            throw new Error("No token found");
+        }
+
+        const response = await apiClient.get("/users/me");
         return response.data;
     } catch (error) {
         console.error("Profile fetch error:", error);
         throw new Error(error.response?.data?.message || "Failed to fetch profile");
     }
 };
-
-// src/utils/storeToken.js
-export const storeAccessToken = () => {
-  const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3Mzc5ODk1NDQwOTIyOWY1NWE4ZjYxZCIsImlhdCI6MTczMTc1NDE3MCwiZXhwIjoxNzMxODQwNTcwfQ.ZqNQ7bB8VaWsqzpOUnG4nC191J2l09PV-j05fPdAj6M";
-  localStorage.setItem("userToken", accessToken);
-};
-
-// Call this function once to store the token
-storeAccessToken();
-
-
- 

@@ -3,11 +3,11 @@ import { Home } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 
 const campaigns = [
-  { id: 1, title: "Water Conservation Workshop", image: "src/assets/images/flyer1.jpg", description: "Join our workshop on conserving water to help the environment. 28/12/2024 Labone-Junction" },
-  { id: 2, title: "Community Clean-Up", image: "src/assets/images/post.png", description: "Participate in our community clean-up and make a difference! 28/12/2024 Kasoa" },
-  { id: 3, title: "Leakage Reporting Awareness", image: "src/assets/images/save.jpg", description: "Learn how to report leakages effectively to save water." },
-  { id: 4, title: "Plumber Training", image: "src/assets/images/ber.png", description: "A special training session for plumbers on water conservation techniques. Coming soon!" },
-  { id: 5, title: "Water-Saving Initiative", image: "src/assets/images/yard.jpg", description: "Be a part of our initiative to save water in your community." },
+  { id: 1, title: "Water Conservation Workshop", image: "images/flyer1.jpg", description: "Join our workshop on conserving water to help the environment. 28/12/2024 Labone-Junction" },
+  { id: 2, title: "Community Clean-Up", image: "images/post.png", description: "Participate in our community clean-up and make a difference! 28/12/2024 Kasoa" },
+  { id: 3, title: "Leakage Reporting Awareness", image: "images/save.jpg", description: "Learn how to report leakages effectively to save water." },
+  { id: 4, title: "Plumber Training", image: "images/ber.png", description: "A special training session for plumbers on water conservation techniques. Coming soon!" },
+  { id: 5, title: "Water-Saving Initiative", image: "images/yard.jpg", description: "Be a part of our initiative to save water in your community." },
 ];
 
 const CampaignsEvents = () => {
