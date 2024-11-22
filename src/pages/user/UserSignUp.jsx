@@ -38,6 +38,12 @@ const UserSignUp = () => {
         password: password
       };
 
+      // Add photo handling
+      const photoFile = formData.get("photo");
+      if (photoFile && photoFile.size > 0) {
+        payload.photo = photoFile;
+      }
+
       await apiSignup(payload);
 
       Swal.fire({
@@ -101,6 +107,16 @@ const UserSignUp = () => {
 
                 </div>
 
+                <div>
+                  <label htmlFor="photo" className="block text-blue-700 text-sm font-bold mb-2">Photo</label>
+                  <input 
+                    name="photo" 
+                    type="file" 
+                    id="photo" 
+                    className="w-full p-2 rounded bg-white-100 border border-cyan-200 focus:outline-none focus:ring-2 focus:ring-blue-300" 
+                    required 
+                  />
+                </div>
 
                 <div className="flex gap-4">
                   <div className="flex-1">
