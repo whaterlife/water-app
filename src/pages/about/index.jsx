@@ -5,17 +5,17 @@ const About = () => {
     {
       title: "Basic Plumbing Techniques",
       description: "Learn essential techniques for home plumbing repairs and maintenance.",
-      imgSrc: "src/assets/images/plum.jpg", 
+      imgSrc: "/images/plum.jpg", 
     },
     {
       title: "Types of Pipes and Fittings",
       description: "Understand different types of pipes and fittings used in plumbing systems.",
-      imgSrc: "src/assets/images/emerge.jpg",
+      imgSrc: "/images/emerge.jpg",
     },
     {
       title: "Water Conservation Tips",
       description: "Explore effective methods to conserve water in households.",
-      imgSrc: "src/assets/images/water.jpg",
+      imgSrc: "/images/water.jpg",
     },
   ];
 
