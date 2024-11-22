@@ -18,7 +18,7 @@ const PlumberList = () => {
                 const response = await fetch('https://water-api-329b.onrender.com/users/all', {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EwNDQzOTI1YTIwMjJkZGQ2OTc5NiIsImlhdCI6MTczMTg2OTQ0NywiZXhwIjoxNzMxOTU1ODQ3fQ.r9Y_pdl84liwocIfOEDwCkDCWGP3ALOprPLQyFdktig`,
+                        'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
                     },
                 });
                 if (!response.ok) {
@@ -30,7 +30,9 @@ const PlumberList = () => {
                     name: `${user.firstname} ${user.lastname}`,
                     location: user.location,
                     contact: user.phoneNumber,
-                    image: user.photo ? `https://water-api-329b.onrender.com/${user.photo}` : 'https://via.placeholder.com/150',
+                    image: user.photo 
+                        ? `https://savefiles.org/${user.photo}?shareable_link=543`
+                        : 'https://via.placeholder.com/150',
                 })));
             } catch (error) {
                 console.error('Error fetching plumbers:', error);
@@ -69,6 +71,10 @@ const PlumberList = () => {
                                 src={plumber.image}
                                 alt={plumber.name}
                                 className="w-24 h-24 sm:w-32 sm:h-32 object-cover"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = 'https://via.placeholder.com/150';
+                                }}
                             />
                         )}
                         <div className="p-4 flex flex-col justify-between">
@@ -81,7 +87,6 @@ const PlumberList = () => {
                     </div>
                 ))}
             </div>
-            {/* Pagination Controls */}
             <div className="flex justify-center mt-6 space-x-2">
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button

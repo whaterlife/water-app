@@ -9,17 +9,17 @@ const Footer = () => {
             <h3 className="mb-4">choose 4life for a seamless and convenient  experience</h3>
             <h2 className="font-bold mb-4">NEED HELP?</h2>
             <div className="flex items-start mb-4">
-              <img src="./src/assets/images/icon_contact.png" alt="Contact" className="w-8 h-8 mr-4" />
+              <img src="./images/icon_contact.png" alt="Contact" className="w-8 h-8 mr-4" />
               <div>
                 <h5 className="font-bold">+233 24 584 0830 (8am - 5pm)</h5>
                 <h5 className="font-bold">+233 54 484 1547 (5pm till 8am)</h5>
               </div>
             </div>
             <div className="flex space-x-4">
-              <img src="./src/assets/images/insta.png" alt="Instagram" className="w-6 h-6" />
-              <img src="./src/assets/images/facebook.png" alt="Facebook" className="w-6 h-6" />
-              <img src="./src/assets/images/linked.png" alt="LinkedIn" className="w-6 h-6" />
-              <img src="./src/assets/images/twitter.png" alt="Twitter" className="w-6 h-6" />
+              <img src="./images/insta.png" alt="Instagram" className="w-6 h-6" />
+              <img src="./images/facebook.png" alt="Facebook" className="w-6 h-6" />
+              <img src="./images/linked.png" alt="LinkedIn" className="w-6 h-6" />
+              <img src="./images/twitter.png" alt="Twitter" className="w-6 h-6" />
             </div>
           </div>
   

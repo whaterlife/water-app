@@ -32,6 +32,7 @@ const Dashboard = () => {
 
         // Then fetch fresh data
         const freshData = await getProfile();
+        console.log(freshData)
         if (freshData) {
           setProfileData(freshData);
           localStorage.setItem("profileData", JSON.stringify(freshData));

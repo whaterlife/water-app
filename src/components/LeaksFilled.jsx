@@ -72,7 +72,7 @@ const LeaksFilled = () => {
           <p><strong>Description:</strong> ${report.description}</p>
           <p><strong>Status:</strong> ${report.status}</p>
           <p><strong>Reported on:</strong> ${new Date(report.date).toLocaleString()}</p>
-          ${report.photo ? `<img src="https://savefiles.org/${report.photo}?shareable_link=491" alt="Leak photo" class="mt-4 max-w-full h-auto"/>` : ''}
+          ${report.photo ? `<img src="https://savefiles.org/${report.photo}?shareable_link=545" alt="Leak photo" class="mt-4 max-w-full h-auto"/>` : ''}
         </div>
       `,
       width: '600px',

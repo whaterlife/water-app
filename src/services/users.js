@@ -2,9 +2,26 @@ import { apiClient } from "./config"
 
 export const apiSignup = async (payload) => {
     try {
-        const response = await apiClient.post('/users/register', payload);
+        const formData = new FormData();
+        
+        // Append all fields to FormData
+        Object.keys(payload).forEach(key => {
+            // Special handling for photo file
+            if (key === 'photo' && payload[key] instanceof File) {
+                formData.append('photo', payload[key]);
+            } else {
+                formData.append(key, payload[key]);
+            }
+        });
+
+        const response = await apiClient.post('/users/register', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data', // Important for file upload
+            },
+        });
         return response.data;
     } catch (error) {
+        console.error('Signup error details:', error.response?.data);
         throw new Error(error.response?.data?.message || 'Registration failed');
     }
 };

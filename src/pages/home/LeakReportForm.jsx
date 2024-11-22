@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RootLayout from "../../layouts/RootLayout";
+import { leakService } from "../../services/leaks";
+import Swal from "sweetalert2";
 
 const LeakReportForm = () => {
     const [formData, setFormData] = useState({
@@ -13,7 +15,7 @@ const LeakReportForm = () => {
         photo: null,
         signature: ''
     });
-
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -26,6 +28,7 @@ const LeakReportForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         const data = new FormData();
         data.append('firstName', formData.firstName);
@@ -41,12 +44,13 @@ const LeakReportForm = () => {
         console.log('Token:', token);
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/leakforms/create`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: data
+            await leakService.createLeak(data);
+
+            await Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Leak report submitted successfully',
+                timer: 1500
             });
 
             if (response.status === 201) {
@@ -59,7 +63,13 @@ const LeakReportForm = () => {
             }
         } catch (error) {
             console.error('Error submitting leak report:', error);
-            alert('Error submitting leak report. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Failed to submit leak report. Please try again.'
+            });
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -160,7 +170,6 @@ const LeakReportForm = () => {
                                     type="file"
                                     name="photo"
                                     className="w-full px-4 py-2 bg-white border border-cyan-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    accept="image/*"
                                     onChange={handleChange}
                                     required
                                 />

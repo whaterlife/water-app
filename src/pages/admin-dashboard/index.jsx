@@ -69,7 +69,7 @@ const AdminDashboard = () => {
       >
         <div className="flex items-center mb-8">
           <img
-            src="./src/assets/images/hat.jpg"
+            src="./images/hat.jpg"
             alt="Water4Life Logo"
             className="w-10 h-10 rounded-full"
           />

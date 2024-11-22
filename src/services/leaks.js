@@ -6,9 +6,14 @@ export const leakService = {
   // Create a new leak report
   createLeak: async (payload) => {
     try {
-      const response = await apiClient.post(`${LEAKS_ENDPOINT}/create`, payload);
+      const response = await apiClient.post(`${LEAKS_ENDPOINT}/create`, payload, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return response.data;
     } catch (error) {
+      console.error('Create leak error:', error.response?.data);
       throw new Error(error.response?.data?.message || 'Failed to create leak report');
     }
   },
