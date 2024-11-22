@@ -200,7 +200,7 @@ const PlumberChecklistForm = () => {
             </div>
             <div className="hidden lg:block lg:w-1/2">
                 <img
-                    src="../src/assets/images/pipess.jpg"
+                    src="./images/pipess.jpg"
                     alt="image"
                     className="shadow-lg object-cover h-full w-full"
                 />

@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import RootLayout from "../../layouts/RootLayout";
 import { leakService } from "../../services/leaks";
 import Swal from "sweetalert2";
+import SignaturePad from 'react-signature-canvas';
 
 const LeakReportForm = () => {
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
         gpsAddress: '',
         contact: '',
         description: '',
@@ -16,6 +15,7 @@ const LeakReportForm = () => {
         signature: ''
     });
     const [loading, setLoading] = useState(false);
+    const signaturePadRef = useRef(null);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -26,22 +26,31 @@ const LeakReportForm = () => {
         });
     };
 
+    const clearSignature = () => {
+        signaturePadRef.current.clear();
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
+        if (signaturePadRef.current.isEmpty()) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please provide your signature'
+            });
+            setLoading(false);
+            return;
+        }
+
         const data = new FormData();
-        data.append('firstName', formData.firstName);
-        data.append('lastName', formData.lastName);
         data.append('gpsAddress', formData.gpsAddress);
         data.append('contact', formData.contact);
         data.append('description', formData.description);
         data.append('date', formData.date);
         data.append('photo', formData.photo);
-        data.append('signature', formData.signature);
-
-        const token = localStorage.getItem('userToken');
-        console.log('Token:', token);
+        data.append('signature', signaturePadRef.current.toDataURL());
 
         try {
             await leakService.createLeak(data);
@@ -53,14 +62,8 @@ const LeakReportForm = () => {
                 timer: 1500
             });
 
-            if (response.status === 201) {
-                const result = await response.json();
-                console.log('Leak report submitted successfully:', result);
-                alert('Leak report submitted successfully!');
-                navigate('/home');
-            } else {
-                throw new Error(`Failed to submit leak report: ${response.statusText}`);
-            }
+            navigate('/home');
+            
         } catch (error) {
             console.error('Error submitting leak report:', error);
             Swal.fire({
@@ -81,35 +84,6 @@ const LeakReportForm = () => {
                         Water Leakage
                     </h1>
                     <form className="space-y-4" onSubmit={handleSubmit}>
-                        <div className="flex space-x-4">
-                            <div className="w-1/2">
-                                <label className="block text-md font-medium text-white mb-1">
-                                    First Name
-                                </label>
-                                <input
-                                    type="text"
-                                    name="firstName"
-                                    placeholder="Enter first name"
-                                    className="w-full px-4 py-2 bg-white border border-cyan-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="w-1/2">
-                                <label className="block text-md font-medium text-white mb-1">
-                                    Last Name
-                                </label>
-                                <input
-                                    type="text"
-                                    name="lastName"
-                                    placeholder="Enter last name"
-                                    className="w-full px-4 py-2 bg-white border border-cyan-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-
                         <div>
                             <label className="block text-md font-medium text-white mb-1">
                                 GPS Address
@@ -179,20 +153,28 @@ const LeakReportForm = () => {
                             <label className="block text-md font-medium text-white mb-1">
                                 Signature
                             </label>
-                            <input
-                                type="text"
-                                name="signature"
-                                placeholder="Enter your signature"
-                                className="w-full px-4 py-2 bg-white border border-cyan-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                onChange={handleChange}
-                                required
-                            />
+                            <div className="border border-cyan-500 rounded-lg bg-white">
+                                <SignaturePad
+                                    ref={signaturePadRef}
+                                    canvasProps={{
+                                        className: "w-full h-40"
+                                    }}
+                                />
+                            </div>
+                            <button
+                                type="button"
+                                onClick={clearSignature}
+                                className="mt-2 px-4 py-2 text-sm text-blue-600 hover:text-blue-800"
+                            >
+                                Clear Signature
+                            </button>
                         </div>
                         <button
                             type="submit"
                             className="w-full bg-blue-700 hover:bg-cyan-600 text-white font-bold py-2 rounded-lg transition-colors"
+                            disabled={loading}
                         >
-                            Submit
+                            {loading ? "Submitting..." : "Submit"}
                         </button>
                     </form>
                 </div>

@@ -1,28 +1,21 @@
 import { apiClient } from "./config"
 
-export const apiSignup = async (payload) => {
+export const apiSignup = async (formData) => {
     try {
-        const formData = new FormData();
-        
-        // Append all fields to FormData
-        Object.keys(payload).forEach(key => {
-            // Special handling for photo file
-            if (key === 'photo' && payload[key] instanceof File) {
-                formData.append('photo', payload[key]);
-            } else {
-                formData.append(key, payload[key]);
-            }
+        const response = await fetch('https://water-api-329b.onrender.com/users/register', {
+            method: 'POST',
+            body: formData, // Send formData directly, don't JSON.stringify
+            // Don't set Content-Type header, let the browser set it with the boundary
         });
 
-        const response = await apiClient.post('/users/register', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data', // Important for file upload
-            },
-        });
-        return response.data;
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Registration failed');
+        }
+
+        return await response.json();
     } catch (error) {
-        console.error('Signup error details:', error.response?.data);
-        throw new Error(error.response?.data?.message || 'Registration failed');
+        throw error;
     }
 };
 

@@ -63,20 +63,24 @@ const LeaksFilled = () => {
 
   const handleShowDetails = (report) => {
     Swal.fire({
-      title: 'Report Details',
+      title: 'Leak Report Details',
       html: `
         <div class="text-left">
-          <p><strong>Reporter:</strong> ${report.firstName} ${report.lastName}</p>
+          <p><strong>Name:</strong> ${report.firstName} ${report.lastName}</p>
           <p><strong>Contact:</strong> ${report.contact}</p>
-          <p><strong>Location:</strong> ${report.gpsAddress}</p>
+          <p><strong>GPS Address:</strong> ${report.gpsAddress}</p>
           <p><strong>Description:</strong> ${report.description}</p>
-          <p><strong>Status:</strong> ${report.status}</p>
-          <p><strong>Reported on:</strong> ${new Date(report.date).toLocaleString()}</p>
-          ${report.photo ? `<img src="https://savefiles.org/${report.photo}?shareable_link=545" alt="Leak photo" class="mt-4 max-w-full h-auto"/>` : ''}
+          <p><strong>Date:</strong> ${new Date(report.date).toLocaleDateString()}</p>
+          ${report.photo ? `
+            <div class="mt-4">
+              <p><strong>Photo:</strong></p>
+              <img src="${report.photo}" alt="Leak photo" class="max-w-full h-auto rounded-lg shadow-lg"/>
+            </div>
+          ` : ''}
         </div>
       `,
       width: '600px',
-      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Close'
     });
   };
 
@@ -120,9 +124,15 @@ const LeaksFilled = () => {
       )}
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white">
+        <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Photo
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Name
+              </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reported By</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
@@ -130,9 +140,24 @@ const LeaksFilled = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assigned To</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-gray-200">
             {currentLeaks.map((leak) => (
-              <tr key={leak.id} className="hover:bg-gray-50">
+              <tr key={leak._id}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {leak.photo ? (
+                    <img 
+                      src={leak.photo} 
+                      alt="Leak" 
+                      className="h-20 w-20 rounded-lg object-cover cursor-pointer"
+                      onClick={() => handleShowDetails(leak)}
+                    />
+                  ) : (
+                    <span className="text-gray-400">No image</span>
+                  )}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {leak.firstName} {leak.lastName}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">{leak.gpsAddress}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{`${leak.firstName} ${leak.lastName}`}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{leak.date}</td>
@@ -145,15 +170,6 @@ const LeaksFilled = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{leak.assignedPlumber || 'Unassigned'}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    onClick={() => handleShowDetails(leak)}
-                    className="text-blue-600 hover:text-blue-800"
-                    title="View Details"
-                  >
-                    <Info size={18} />
-                  </button>
-                </td>
               </tr>
             ))}
           </tbody>

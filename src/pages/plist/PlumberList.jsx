@@ -56,6 +56,17 @@ const PlumberList = () => {
                 >
                     {isGridView ? <List size={20} /> : <Grid size={20} />}
                 </button>
+                <button
+                    onClick={() => {
+                        console.log("Current plumbers:", plumbers);
+                        plumbers.forEach(p => {
+                            console.log(`${p.name}'s image URL:`, p.image);
+                        });
+                    }}
+                    className="p-2 bg-gray-500 text-white rounded-lg ml-2"
+                >
+                    Debug Images
+                </button>
             </div>
             <div className={`grid ${isGridView ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" : "grid-cols-1 space-y-4"}`}>
                 {currentItems.map((plumber) => (

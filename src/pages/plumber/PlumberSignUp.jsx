@@ -14,35 +14,28 @@ const Plumbersignup = () => {
     setLoading(true);
 
     try {
-      const formData = new FormData(event.target);
-      const password = formData.get("password");
-      const confirmpassword = formData.get("confirmpassword");
+      const formData = new FormData();
+      
+      // Get form data
+      const form = event.target;
+      formData.append("officeName", form.officeName.value);
+      formData.append("firstname", form.firstname.value);
+      formData.append("lastname", form.lastname.value);
+      formData.append("phoneNumber", form.phoneNumber.value);
+      formData.append("location", form.location.value);
+      formData.append("email", form.email.value);
+      formData.append("password", form.password.value);
 
-      if (password !== confirmpassword) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Password Mismatch',
-          text: 'Passwords do not match. Please try again.',
-        });
-        return;
+      // Handle photo file
+      const photoFile = form.photo.files[0];
+      if (photoFile) {
+        formData.append("photo", photoFile);
+        console.log("Photo being uploaded:", photoFile); // Debug log
       }
 
-      const payload = {
-        officeName: formData.get("officeName"),
-        firstname: formData.get("firstname"),
-        lastname: formData.get("lastname"),
-        phoneNumber: formData.get("phoneNumber"),
-        location: formData.get("location"),
-        email: formData.get("email"),
-        password: password
-      };
-
-      const photoFile = formData.get("photo");
-      if (photoFile && photoFile.size > 0) {
-        payload.photo = photoFile;
-      }
-
-      await apiSignup(payload);
+      // Make sure we're sending the FormData object
+      const response = await apiSignup(formData);
+      console.log("Signup response:", response); // Debug log
 
       Swal.fire({
         icon: "success",
