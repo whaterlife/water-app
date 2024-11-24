@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
+import { apiLogin } from '../../services/users';
+import Swal from 'sweetalert2';
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
@@ -11,27 +13,31 @@ const AdminLogin = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/users/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            if (!response.ok) {
-                throw new Error('Login failed');
+            const response = await apiLogin({ email, password });
+            
+            // Check if the logged-in user is an admin
+            const profileData = JSON.parse(localStorage.getItem('profileData'));
+            if (profileData && profileData.role === 'admin') {
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful',
+                    text: 'Welcome Admin!',
+                    timer: 1500
+                });
+                navigate('/admin-dashboard');
+            } else {
+                // If not admin, show error and clear storage
+                localStorage.removeItem('userToken');
+                localStorage.removeItem('profileData');
+                throw new Error('Unauthorized access');
             }
-
-            const data = await response.json();
-            // Store the token securely
-            localStorage.setItem('adminToken', data.token);
-
-            // Navigate to the admin dashboard
-            navigate('/admin-dashboard');
         } catch (error) {
             console.error('Error logging in:', error);
-            alert('Login failed. Please check your credentials and try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Failed',
+                text: 'Invalid admin credentials'
+            });
         }
     };
 
