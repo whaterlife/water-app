@@ -1,0 +1,71 @@
+.backgroundImage {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    position: relative;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    -webkit-transform: translate3d(0,0,0);
+}
+
+.backgroundImage::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.fixing {
+    background-image: url('/images/fixing.jpg') !important;
+    background-color: #f0f0f0; /* Fallback color */
+}
+
+.newtools {
+    background-image: url('/images/newtools.jpg') !important;
+    background-color: #f0f0f0; /* Fallback color */
+}
+
+.contentWrapper {
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+/* Add preload classes */
+.preloadFixing {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+    background-image: url('/images/fixing.jpg');
+}
+
+.preloadNewtools {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+    background-image: url('/images/newtools.jpg');
+} 

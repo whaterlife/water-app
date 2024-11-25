@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { apiLogin } from '../../services/users';
 import Swal from 'sweetalert2';
+import styles from '../../styles/BackgroundStyles.module.css';
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
@@ -44,8 +45,8 @@ const AdminLogin = () => {
     return (
         <section>
             <Navbar />
-            <div className="flex items-center justify-center min-h-screen bg-gray-100">
-                <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
+            <div className={`${styles.backgroundImage} ${styles.newtools} flex items-center justify-center`}>
+                <div className={`${styles.contentWrapper} bg-neutral-200 bg-opacity-50 p-6 rounded shadow-md w-full max-w-md`}>
                     <h2 className="text-4xl font-bold text-blue-900 text-center mb-6">Admin</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">

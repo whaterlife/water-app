@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RootLayout from '../../layouts/RootLayout';
 import { Link, useNavigate } from 'react-router-dom';
 import { apiLogin } from '../../services/users';
 import Swal from 'sweetalert2';
+import styles from '../../styles/BackgroundStyles.module.css';
 
 const UserOther = () => {
   const [email, setEmail] = useState('');
@@ -48,8 +49,8 @@ const UserOther = () => {
 
   return (
     <RootLayout>
-      <div className="flex items-center justify-center min-h-screen bg-[url('src/assets/images/places.png')]">
-        <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
+      <div className={`${styles.backgroundImage} ${styles.fixing} flex items-center justify-center`}>
+        <div className={`${styles.contentWrapper} bg-neutral-200 bg-opacity-50 p-6 rounded shadow-md w-full max-w-md`}>
           <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
